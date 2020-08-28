@@ -9,12 +9,14 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           _createBackground(context),
+          _loginForm(context),
         ],
       ),
     );
   }
 
   Widget _createBackground(BuildContext context) {
+
     final totalSize = MediaQuery.of(context).size;
 
     final backgroundPetCare = Container(
@@ -31,8 +33,9 @@ class LoginPage extends StatelessWidget {
       width: 100.0,
       height: 100.0,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          color: Color.fromRGBO(255, 255, 255, 0.1)),
+         /*  borderRadius: BorderRadius.circular(100.0), */
+        shape: BoxShape.circle,
+        color: Color.fromRGBO(255, 255, 255, 0.1)),
     );
 
     return Stack(
@@ -45,15 +48,118 @@ class LoginPage extends StatelessWidget {
         Positioned(child: circle,bottom: -20.0,left: -20.0,),
         Container(
           padding: EdgeInsets.only(top: 80.0),
+          width: double.infinity,
+          height: 200.0,
+          alignment: Alignment.center,
+          color: Colors.transparent,
           child: Column(
             children: <Widget>[
               Icon(FontAwesomeIcons.paw,color: Colors.white,size: 70.0,),
-              SizedBox(height: 10.0, width: double.infinity, ),
-              Text('Bienvenido', style: TextStyle( color: Colors.white, fontSize:  25.0),)
+              SizedBox(height: 10.0,/* , width: double.infinity, */ ),
+              Text('¡Bienvenido a PetCare!', style: TextStyle( color: Colors.white, fontSize:  25.0),)
             ],
           ),
         )
       ],
     );
   }
+
+  Widget _loginForm(BuildContext context) {
+    final totalSize = MediaQuery.of(context).size;
+    
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+
+          SafeArea(
+            child: Container(
+              height: 180.0,
+            )
+          ),
+
+          Container(
+            width: totalSize.width*0.85,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 3.0,
+                  offset: Offset(0.0, 5.0),
+                  spreadRadius: 3.0
+                )
+              ],
+            ),
+            margin: EdgeInsets.symmetric(vertical: 30.0),
+            padding: EdgeInsets.symmetric(vertical: 50.0),
+            child: Column(
+              children: <Widget>[
+                Text('Sign In', style: TextStyle(fontSize: 20.0)),
+                SizedBox(height: 60.0),
+                _createEmail(),
+                SizedBox(height: 30.0),
+                _createPassword(),
+                SizedBox(height: 30.0),
+                _createButton(),
+              ],
+            ),
+          ),
+
+          Text('¿Olvidaste tu contraseña?'),
+          SizedBox(height: 100.0),
+
+
+        ],
+      ),
+    );
+  }
+
+  Widget _createEmail() {
+
+    return Container(
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          icon: Icon( Icons.alternate_email, color:Color.fromRGBO(46, 177, 185, 1.0) ),
+          hintText: 'example@mail.com',
+          labelText: 'email'
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+    );
+  }
+
+  Widget _createPassword() {
+
+      return Container(
+        child: TextField(
+          obscureText: true,
+          /* keyboardType: TextInputType.emailAddress, */
+          decoration: InputDecoration(
+            icon: Icon( Icons.lock_outline, color:Color.fromRGBO(46, 177, 185, 1.0) ),
+            /* hintText: 'example@mail.com', */
+            labelText: 'password'
+          ),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+      );
+  }
+
+  Widget _createButton() {
+    
+    return RaisedButton(
+      child: Container(
+        child: Text('Login'),
+        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+      /* elevation: 0.0, */
+      color:Color.fromRGBO(46, 177, 185, 1.0),
+      textColor: Colors.white,
+      onPressed: () {},
+      );
+  }
+  
+
 }
