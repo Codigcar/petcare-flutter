@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
  
