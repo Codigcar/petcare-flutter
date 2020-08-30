@@ -4,9 +4,16 @@ import 'package:petcare/src/bloc/provider.dart';
 import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
 import 'package:petcare/src/pages/register_page.dart';
+import 'package:petcare/src/user_preferences/user_preferences.dart';
  
-void main() => runApp(MyApp());
- 
+void main() async{ 
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  final prefs = new UserPreferences();
+  await prefs.initPrefs();
+  
+  runApp(MyApp());
+}
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -15,6 +22,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+
+    // Mostrar token guardado
+    final prefs = new UserPreferences();
+    print( prefs.token );
+
     return Provider(
       child: MaterialApp(
       title: 'Material App',
