@@ -3,6 +3,7 @@ import 'package:petcare/src/bloc/provider.dart';
 
 import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
+import 'package:petcare/src/pages/register_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'home': (BuildContext context) => HomePage(),
+        'register': (BuildContext context) => RegisterPage()
       },
       theme: ThemeData(
         primaryColor: Color.fromRGBO(46, 177, 185, 1.0)

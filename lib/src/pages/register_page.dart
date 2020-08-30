@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcare/src/bloc/login_bloc.dart';
 import 'package:petcare/src/bloc/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +122,7 @@ class LoginPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 50.0),
             child: Column(
               children: <Widget>[
-                Text('Sign In', style: TextStyle(fontSize: 20.0)),
+                Text('Registro', style: TextStyle(fontSize: 20.0)),
                 SizedBox(height: 60.0),
                 _createEmail(bloc),
                 SizedBox(height: 30.0),
@@ -133,8 +133,8 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           FlatButton(
-            child: Text('Registrate'),
-            onPressed: () => Navigator.pushReplacementNamed(context, 'register')
+            child: Text('¿Ya tienes cuenta? Login'),
+            onPressed: () => Navigator.pushReplacementNamed(context, 'login')
           ),
           SizedBox(height: 100.0),
         ],
