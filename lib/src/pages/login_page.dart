@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcare/src/bloc/login_bloc.dart';
 import 'package:petcare/src/bloc/provider.dart';
 import 'package:petcare/src/providers/user_provider.dart';
+import 'package:petcare/src/utils/utils.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -210,14 +211,19 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _printDataEmailPassword(LoginBloc bloc, BuildContext context) {
+  _printDataEmailPassword(LoginBloc bloc, BuildContext context) async {
     print('===========');
     print('Email: ${ bloc.get_email }');
     print('Email: ${ bloc.get_password }');
 
-    userProvider.login(bloc.get_email, bloc.get_password);
+    Map info = await userProvider.login(bloc.get_email, bloc.get_password);
+
+    if ( info['ok'] ) {
+      Navigator.pushReplacementNamed(context, 'home');
+    } else {
+      showAlert(context, info['mensaje']);
+    }
 
     /* Navigator.pushNamed(context, 'home'); */
-    Navigator.pushReplacementNamed(context, 'home');
   }
 }
