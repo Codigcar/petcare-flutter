@@ -12,15 +12,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 */
 
-class UserPreferences {
+class Storage {
 
-  static final UserPreferences _instancia = new UserPreferences._internal();
+  static final Storage _instancia = new Storage._internal();
 
-  factory UserPreferences() {
+  factory Storage() {
     return _instancia;
   }
 
-  UserPreferences._internal();
+  Storage._internal();
 
   SharedPreferences _prefs;
 
@@ -55,5 +55,11 @@ class UserPreferences {
     _prefs.setString('ultimaPagina', value);
   }
 
+  get userId {
+    return _prefs.getInt('userId') ?? 0;
+  }
+  set userId( int value ) {
+    _prefs.setInt('userId', value );
+  }
 }
 

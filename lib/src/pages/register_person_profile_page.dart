@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/models/person_profile_model.dart';
 import 'package:petcare/src/providers/person_profile_provider.dart';
+import 'package:petcare/src/storage/storage.dart';
 
 class RegisterUserPage extends StatefulWidget {
   @override
@@ -16,12 +17,20 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final _storage = new Storage();
+  int userId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    this.userId = _storage.userId;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registrar usuario'),
+        title: Text('Registrar usuarios ' + userId.toString() ),
       ),
       body: Form(
         key: formKey,
@@ -42,7 +51,9 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
             Divider(),
             _inputAge(),
             Divider(),
-            _createButton()
+            _createButton(),
+            Divider(),
+            _buttonNextPet(context)
           ],
         ),
       ),
@@ -181,18 +192,20 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
     if( !formKey.currentState.validate() ) return;
     formKey.currentState.save();
 
-    print('Todo ok!');
+    /* print('Todo ok!');
+    print('Antes de decodedData');
     print(personProfileModel.name);
     print(personProfileModel.password);
     print(personProfileModel.lastName);
     print(personProfileModel.document);
     print(personProfileModel.email);
     print(personProfileModel.phone);
-    print(personProfileModel.age);
+    print(personProfileModel.age); */
 
     
     personProfileProvider.registerPersonProfile(personProfileModel);
     /* showSnackbar('Registro guardado'); */
+    
 
   }
 
@@ -203,6 +216,14 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
     );
 
     scaffoldKey.currentState.showSnackBar(snackbar);
+  }
+
+  Widget _buttonNextPet(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon( Icons.add ),
+      onPressed: () {
+        Navigator.pushNamed(context, 'register_pet');
+    },);
   }
 
 }
