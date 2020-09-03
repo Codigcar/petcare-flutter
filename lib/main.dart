@@ -3,6 +3,7 @@ import 'package:petcare/src/bloc/provider.dart';
 
 import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
+import 'package:petcare/src/pages/register_business_profile.dart';
 import 'package:petcare/src/pages/register_page.dart';
 import 'package:petcare/src/pages/register_pet_page.dart';
 import 'package:petcare/src/pages/register_person_profile_page.dart';
@@ -33,13 +34,14 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'register_user',
+      initialRoute: 'register_business_profile',
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'home': (BuildContext context) => HomePage(),
         'register': (BuildContext context) => RegisterPage(),
         'register_user' : (BuildContext context ) => RegisterUserPage(),
-        'register_pet' : (BuildContext context ) => RegisterPetPage()
+        'register_pet' : (BuildContext context ) => RegisterPetPage(),
+        'register_business_profile' : (BuildContext context ) => RegisterBusinessProfile()
       },
       theme: ThemeData(
         primaryColor: Color.fromRGBO(46, 177, 185, 1.0)

@@ -1,36 +1,26 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:petcare/src/models/person_profile_model.dart';
-import 'package:petcare/src/providers/person_profile_provider.dart';
+import 'package:petcare/src/models/business_profile_model.dart';
+import 'package:petcare/src/providers/business_profile_provider.dart';
 import 'package:petcare/src/storage/storage.dart';
 
-class RegisterUserPage extends StatefulWidget {
+class RegisterBusinessProfile extends StatefulWidget {
   @override
-  _RegisterUserPageState createState() => _RegisterUserPageState();
+  _RegisterBusinessProfileState createState() => _RegisterBusinessProfileState();
 }
 
-class _RegisterUserPageState extends State<RegisterUserPage> {
-
-  PersonProfileModel personProfileModel = new PersonProfileModel();
-  final personProfileProvider = new PersonProfileProvider();
+class _RegisterBusinessProfileState extends State<RegisterBusinessProfile> {
+  
+  BusinessProfileModel businessProfileModel = new BusinessProfileModel();
+  final businessProfileProvider = new BusinessProfileProvider();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _storage = new Storage();
-  int userId = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    this.userId = _storage.userId;
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registrar usuarios ' + userId.toString() ),
+        title: Text('Registrar usuario del Negocio' ),
       ),
       body: Form(
         key: formKey,
@@ -52,20 +42,18 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
             _inputAge(),
             Divider(),
             _createButton(),
-            Divider(),
-            _buttonNextPet(context)
           ],
         ),
       ),
     );
   }
 
-  Widget _inputName() {
+   Widget _inputName() {
     return TextFormField(
-      initialValue: personProfileModel.name,
+      initialValue: businessProfileModel.name,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Nombres y Apellidos',
+        labelText: 'Nombres',
         icon: Icon(Icons.account_circle),
         suffixIcon: Icon(Icons.accessibility)
       ),
@@ -76,13 +64,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
           return null;
         }
       },
-      onSaved: (newValue) => personProfileModel.name = newValue,
+      onSaved: (newValue) => businessProfileModel.name = newValue,
     );
   }
 
    Widget _inputLastName() {
     return TextFormField(
-      initialValue: personProfileModel.lastName,
+      initialValue: businessProfileModel.lastName,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         labelText: 'Apellidos',
@@ -96,13 +84,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
           return null;
         }
       },
-      onSaved: (newValue) => personProfileModel.lastName = newValue,
+      onSaved: (newValue) => businessProfileModel.lastName = newValue,
     );
   }
 
   Widget _inputPassword() {
     return TextFormField(
-      initialValue: personProfileModel.password,
+      initialValue: businessProfileModel.password,
       obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
@@ -116,26 +104,26 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
           return 'Contraseña mínimo 4 caracteres';
         } else { null; }
       },
-      onSaved: (newValue) => personProfileModel.password = newValue,
+      onSaved: (newValue) => businessProfileModel.password = newValue,
     );
   }
 
   Widget _inputDocument() {
     return TextFormField(
-      initialValue: personProfileModel.document,
+      initialValue: businessProfileModel.document,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         labelText: 'DNI',
         icon: Icon(Icons.chrome_reader_mode),
         suffixIcon: Icon(Icons.card_travel)
       ),
-      onSaved: (newValue) => personProfileModel.document = newValue,
+      onSaved: (newValue) => businessProfileModel.document = newValue,
     );
   }
 
   Widget _inputEmail() {
     return TextFormField(
-      initialValue: personProfileModel.email,
+      initialValue: businessProfileModel.email,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         labelText: 'Email',
@@ -143,14 +131,14 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
         icon: Icon(Icons.alternate_email),
         suffixIcon: Icon(Icons.email)
       ),
-      onSaved: (newValue) => personProfileModel.email = newValue,
+      onSaved: (newValue) => businessProfileModel.email = newValue,
 
     );
   }
 
   Widget _inputPhone() {
     return TextFormField(
-      initialValue: personProfileModel.phone,
+      initialValue: businessProfileModel.phone,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         labelText: 'Telefono',
@@ -158,13 +146,13 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
         icon: Icon(Icons.phone_android),
         suffixIcon: Icon(Icons.phone)
       ),
-      onSaved: (newValue) => personProfileModel.phone = newValue,
+      onSaved: (newValue) => businessProfileModel.phone = newValue,
     );
   }
 
   Widget _inputAge() {
     return TextFormField(
-      initialValue: personProfileModel.age,
+      initialValue: businessProfileModel.age,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         labelText: 'Fecha de nacimiento',
@@ -172,7 +160,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
         icon: Icon(Icons.perm_contact_calendar),
         suffixIcon: Icon(Icons.calendar_today)
       ),
-      onSaved: (newValue) => personProfileModel.age = newValue,
+      onSaved: (newValue) => businessProfileModel.age = newValue,
     );
   }
 
@@ -184,31 +172,12 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
       label: Text('Save'),
       icon: Icon(Icons.save),
       onPressed: () => _submit(),
-      // _submit();
     );
   }
 
   void _submit() async {
     if( !formKey.currentState.validate() ) return;
     formKey.currentState.save();
-    personProfileProvider.registerPersonProfile(personProfileModel);    
+    businessProfileProvider.registerBusinessProfile(businessProfileModel);    
   }
-
-  void showSnackbar(String message) {
-    final snackbar = SnackBar(
-      content: Text(message),
-      duration: Duration(milliseconds: 1500),
-    );
-
-    scaffoldKey.currentState.showSnackBar(snackbar);
-  }
-
-  Widget _buttonNextPet(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon( Icons.add ),
-      onPressed: () {
-        Navigator.pushNamed(context, 'register_pet');
-    },);
-  }
-
 }

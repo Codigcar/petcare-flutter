@@ -45,21 +45,19 @@ class Storage {
     _prefs.setString('token', value);
   }
   
-
-  // GET y SET de la última página
-  get ultimaPagina {
-    return _prefs.getString('ultimaPagina') ?? 'login';
-  }
-
-  set ultimaPagina( String value ) {
-    _prefs.setString('ultimaPagina', value);
-  }
-
   get userId {
     return _prefs.getInt('userId') ?? 0;
   }
   set userId( int value ) {
     _prefs.setInt('userId', value );
   }
+
+   get businessProfileId {
+    return _prefs.getInt('businessProfileId') ?? 0;
+  }
+  set businessProfileId( int value ) {
+    _prefs.setInt('businessProfileId', value );
+  }
+
 }
 
