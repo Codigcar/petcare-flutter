@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcare/src/bloc/login_bloc.dart';
 import 'package:petcare/src/bloc/provider.dart';
-import 'package:petcare/src/providers/user_provider.dart';
+import 'package:petcare/src/services/user_service.dart';
 import 'package:petcare/src/utils/utils.dart';
 
 class LoginPage extends StatelessWidget {
 
-  final userProvider = new UserProvider();
+  final userProvider = new UserService();
 
   @override
   Widget build(BuildContext context) {

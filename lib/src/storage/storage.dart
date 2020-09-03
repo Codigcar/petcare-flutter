@@ -52,12 +52,14 @@ class Storage {
     _prefs.setInt('userId', value );
   }
 
-   get businessProfileId {
+  get businessProfileId {
     return _prefs.getInt('businessProfileId') ?? 0;
   }
   set businessProfileId( int value ) {
     _prefs.setInt('businessProfileId', value );
   }
+
+ 
 
 }
 

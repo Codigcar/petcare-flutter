@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:petcare/src/models/pet_model.dart';
-import 'package:petcare/src/providers/pet_provider.dart';
+import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/storage/storage.dart';
 import 'package:petcare/src/utils/utils.dart' as utils;
 
@@ -15,7 +15,7 @@ class RegisterPetPage extends StatefulWidget {
 class _RegisterPetPageState extends State<RegisterPetPage> {
   PetModel petModel = new PetModel();
 
-  final petProvider = new PetProvider();
+  final petservice = new PetService();
 
   final formKey = GlobalKey<FormState>();
 
@@ -116,7 +116,7 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
     );
   }
 
-   Widget _inputPhoto() {
+  Widget _inputPhoto() {
     return TextFormField(
       initialValue: petModel.photo,
       decoration: InputDecoration(
@@ -144,7 +144,7 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
     );
   }
 
-    Widget _createButton() {
+  Widget _createButton() {
     return RaisedButton.icon(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       color: Color.fromRGBO(46, 177, 185, 1.0),
@@ -161,8 +161,9 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
     formKey.currentState.save();
 
     print('Todo ok!');
-    petProvider.registerPet(petModel, userId );
-    /* showSnackbar('Registro guardado'); */
+    petservice.registerPet(petModel, userId );
 
   }
+
+
 }

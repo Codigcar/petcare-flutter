@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcare/src/bloc/login_bloc.dart';
 import 'package:petcare/src/bloc/provider.dart';
-import 'package:petcare/src/providers/user_provider.dart';
+import 'package:petcare/src/services/user_service.dart';
 
 class RegisterPage extends StatelessWidget {
 
-  final userProvider = new UserProvider();
+  final userService = new UserService();
 
 
   @override
@@ -213,7 +213,7 @@ class RegisterPage extends StatelessWidget {
 
   _printDataEmailPassword(LoginBloc bloc, BuildContext context) {
     
-    userProvider.registerUser(bloc.get_email, bloc.get_password);
+    userService.registerUser(bloc.get_email, bloc.get_password);
 
     /* Navigator.pushNamed(context, 'home'); */
     /* Navigator.pushReplacementNamed(context, 'home'); */

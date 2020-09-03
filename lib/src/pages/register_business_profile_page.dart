@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/models/business_profile_model.dart';
-import 'package:petcare/src/providers/business_profile_provider.dart';
-import 'package:petcare/src/storage/storage.dart';
+import 'package:petcare/src/services/business_profile_service.dart';
 
 class RegisterBusinessProfile extends StatefulWidget {
   @override
@@ -11,7 +10,7 @@ class RegisterBusinessProfile extends StatefulWidget {
 class _RegisterBusinessProfileState extends State<RegisterBusinessProfile> {
   
   BusinessProfileModel businessProfileModel = new BusinessProfileModel();
-  final businessProfileProvider = new BusinessProfileProvider();
+  final businessProfileService = new BusinessProfileService();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -178,6 +177,6 @@ class _RegisterBusinessProfileState extends State<RegisterBusinessProfile> {
   void _submit() async {
     if( !formKey.currentState.validate() ) return;
     formKey.currentState.save();
-    businessProfileProvider.registerBusinessProfile(businessProfileModel);    
+    businessProfileService.registerBusinessProfile(businessProfileModel);    
   }
 }

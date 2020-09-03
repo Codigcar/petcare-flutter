@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:petcare/src/models/pet_model.dart';
 
-class PetProvider {
+class PetService {
   final String _url = 'http://10.0.2.2:8081/api';
 
   Future<bool> registerPet(PetModel pet, int personProfileId) async {

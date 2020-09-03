@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:petcare/src/models/person_profile_model.dart';
-import 'package:petcare/src/providers/person_profile_provider.dart';
+import 'package:petcare/src/services/person_profile_service.dart';
 import 'package:petcare/src/storage/storage.dart';
 
 class RegisterUserPage extends StatefulWidget {
@@ -13,7 +13,7 @@ class RegisterUserPage extends StatefulWidget {
 class _RegisterUserPageState extends State<RegisterUserPage> {
 
   PersonProfileModel personProfileModel = new PersonProfileModel();
-  final personProfileProvider = new PersonProfileProvider();
+  final personProfileService = new PersonProfileService();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -191,7 +191,7 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   void _submit() async {
     if( !formKey.currentState.validate() ) return;
     formKey.currentState.save();
-    personProfileProvider.registerPersonProfile(personProfileModel);    
+    personProfileService.registerPersonProfile(personProfileModel);    
   }
 
   void showSnackbar(String message) {

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:petcare/src/storage/storage.dart';
 
-class UserProvider {
+class UserService {
   
   final String _firebaseKey = 'AIzaSyD1eKlsC0497JR4rmkj7n0MoLyMYEKCV4I';
   final _storage = new Storage();
