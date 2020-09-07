@@ -1,44 +1,56 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:petcare/src/models/person_profile_model.dart';
 import 'package:petcare/src/services/person_profile_service.dart';
-import 'package:petcare/src/storage/storage.dart';
 
-class RegisterUserPage extends StatefulWidget {
+class RegisterPersonProfilePage extends StatefulWidget {
   @override
   _RegisterUserPageState createState() => _RegisterUserPageState();
 }
 
-class _RegisterUserPageState extends State<RegisterUserPage> {
+class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
 
   PersonProfileModel personProfileModel = new PersonProfileModel();
   final personProfileService = new PersonProfileService();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final _storage = new Storage();
-  int userId = 0;
+  /* final _storage = new Storage(); */
+/*   int userId = 0; */
+  File foto;
 
   @override
   void initState() {
     super.initState();
-    this.userId = _storage.userId;
+
+    if(personProfileModel.photo == null){
+      print("está null personProfileModel.phtoo");
+    }
+    /* this.userId = _storage.userId; */
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registrar usuarios ' + userId.toString() ),
+        title: Text('Registrar perfil de la Persona' ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.photo_size_select_actual),
+              onPressed: _selectPhoto),
+          IconButton(icon: Icon(Icons.camera_alt), onPressed: _takePhoto),
+        ],
       ),
       body: Form(
         key: formKey,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           children: <Widget>[
-            _inputName(),
-            Divider(),
+            _showTwoInputs(),
+            
             _inputLastName(),
             Divider(),
             _inputPassword(),
@@ -53,34 +65,47 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
             Divider(),
             _createButton(),
             Divider(),
-            _buttonNextPet(context)
+            _buttonNextPet(context) 
           ],
         ),
       ),
     );
   }
 
-  Widget _inputName() {
-    return TextFormField(
-      initialValue: personProfileModel.name,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Nombres y Apellidos',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
-      validator: (value) {
-        if (value.length < 3 ){
-          return 'Nombre minimo a 3 caracteres';
-        } else {
-          return null;
-        }
-      },
-      onSaved: (newValue) => personProfileModel.name = newValue,
+  Widget _showTwoInputs(){
+    return Row(
+      children: <Widget>[
+          _inputName(),      
+          _showPhoto()
+    
+      ],
     );
   }
 
-   Widget _inputLastName() {
+  Widget _inputName() {
+    return Container(
+      child: TextFormField(
+        initialValue: personProfileModel.name,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Nombres y Apellidos',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)
+        ),
+        validator: (value) {
+          if (value.length < 3 ){
+            return 'Nombre minimo a 3 caracteres';
+          } else {
+            return null;
+          }
+        },
+        onSaved: (newValue) => personProfileModel.name = newValue,
+      ),
+      width: 280,
+    );
+  }
+
+  Widget _inputLastName() {
     return TextFormField(
       initialValue: personProfileModel.lastName,
       decoration: InputDecoration(
@@ -191,6 +216,10 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
   void _submit() async {
     if( !formKey.currentState.validate() ) return;
     formKey.currentState.save();
+    if (foto != null) {
+      personProfileModel.photo = await personProfileService.uploadImage(foto);
+      print(personProfileModel.photo);
+    }
     personProfileService.registerPersonProfile(personProfileModel);    
   }
 
@@ -211,4 +240,50 @@ class _RegisterUserPageState extends State<RegisterUserPage> {
     },);
   }
 
+  Widget _showPhoto() {
+    if (personProfileModel.photo != null) {
+     /*  return FadeInImage(
+        placeholder: AssetImage('assets/jar-loading.gif'),
+        image: NetworkImage(personProfileModel.photo),
+        height: 300.0,
+        fit: BoxFit.contain,
+      ); */
+      return Container();
+    } else {
+       return Container(
+         child: foto == null ? Text("vacio"): Image.file(foto),
+         height: 100,
+         width: 100,
+         padding: EdgeInsets.only(left:  10.0),
+
+       );
+       /* Image(
+
+        image: AssetImage( foto == null ? 'assets/no-image.png' : foto.path),
+        height: 300.0,
+        fit: BoxFit.cover,
+
+      ); */
+    }
+  }
+
+  
+
+  _processImage(ImageSource origin) async {
+    final fotonew = await ImagePicker.pickImage(source: origin);
+    if (foto != null) {
+      personProfileModel.photo = null;
+    }
+    setState(() {
+      foto = fotonew;
+    });
+  }
+
+  _selectPhoto() async {
+    _processImage(ImageSource.gallery);
+  }
+
+  _takePhoto() async {
+    _processImage(ImageSource.camera);
+  }
 }

@@ -35,12 +35,12 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'register_provider',
+      initialRoute: 'register_person_profile',
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'home': (BuildContext context) => HomePage(),
         'register': (BuildContext context) => RegisterPage(),
-        'register_user' : (BuildContext context ) => RegisterUserPage(),
+        'register_person_profile' : (BuildContext context ) => RegisterPersonProfilePage(),
         'register_pet' : (BuildContext context ) => RegisterPetPage(),
         'register_business_profile' : (BuildContext context ) => RegisterBusinessProfile(),
         'register_provider' : (BuildContext context ) => RegisterProviderPage()
