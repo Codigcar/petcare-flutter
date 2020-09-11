@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/bloc/provider.dart';
+import 'package:petcare/src/pages/detail_provider_page.dart';
 
 import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
+import 'package:petcare/src/pages/main_person_profile_page.dart';
 import 'package:petcare/src/pages/register_business_profile_page.dart';
 import 'package:petcare/src/pages/register_page.dart';
 import 'package:petcare/src/pages/register_pet_page.dart';
@@ -16,6 +18,8 @@ void main() async{
   final prefs = new Storage();
   await prefs.initPrefs();
   
+  
+
   runApp(MyApp());
 }
 class MyApp extends StatefulWidget {
@@ -35,7 +39,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'register_person_profile',
+      initialRoute: 'main_person_profile',
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'home': (BuildContext context) => HomePage(),
@@ -43,7 +47,10 @@ class _MyAppState extends State<MyApp> {
         'register_person_profile' : (BuildContext context ) => RegisterPersonProfilePage(),
         'register_pet' : (BuildContext context ) => RegisterPetPage(),
         'register_business_profile' : (BuildContext context ) => RegisterBusinessProfile(),
-        'register_provider' : (BuildContext context ) => RegisterProviderPage()
+        'register_provider' : (BuildContext context ) => RegisterProviderPage(),
+        'main_person_profile' : (BuildContext context ) => MainPersonProfilePage(),
+        'detail_provider' : (BuildContext context ) => DetailProviderPage(),
+        
       },
       theme: ThemeData(
         primaryColor: Color.fromRGBO(46, 177, 185, 1.0)

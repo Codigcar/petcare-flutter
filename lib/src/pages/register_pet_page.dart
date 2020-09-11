@@ -1,5 +1,8 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:petcare/src/models/pet_model.dart';
 import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/storage/storage.dart';
@@ -25,6 +28,8 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
 
   int userId = 0;
 
+  File foto;
+
   @override
   void initState() {
     super.initState();
@@ -37,12 +42,20 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
       key: scaffoldKey,
       appBar: AppBar(
         title: Text('Registrar Mascota'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.photo_size_select_actual),
+              onPressed: _selectPhoto),
+          IconButton(icon: Icon(Icons.camera_alt), onPressed: _takePhoto),
+        ],
       ),
-      body: Form(
+      body:  Form(
         key: formKey,
         child: ListView(
           padding: EdgeInsets.symmetric( horizontal: 10.0, vertical:  20.0),
           children: <Widget>[
+            _showPhoto(),
+            Divider(),
             _inputName(),
             Divider(),
              _inputAge(),
@@ -55,7 +68,8 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
             Divider(),
             _createButton()
           ],
-        )),
+        )
+      ),
     );
   }
 
@@ -146,24 +160,78 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
 
   Widget _createButton() {
     return RaisedButton.icon(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      color: Color.fromRGBO(46, 177, 185, 1.0),
-      textColor: Colors.white,
-      label: Text('Save'),
-      icon: Icon(Icons.save),
-      onPressed: () => _submit(),
-      // _submit();
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        color: Color.fromRGBO(46, 177, 185, 1.0),
+        textColor: Colors.white,
+        label: Text('Save'),
+        icon: Icon(Icons.save),
+        onPressed: () => _submit(),
+       
     );
   }
 
-  void _submit() async {
+  /* void _submit() async {
     if( !formKey.currentState.validate() ) return;
     formKey.currentState.save();
 
     print('Todo ok!');
     petservice.registerPet(petModel, userId );
 
+  } */
+
+  
+  Widget _showPhoto() {
+    if (petModel.photo != null) {
+     /*  return FadeInImage(
+        placeholder: AssetImage('assets/jar-loading.gif'),
+        image: NetworkImage(personProfileModel.photo),
+        height: 300.0,
+        fit: BoxFit.contain,
+      ); */
+      return Container();
+    } else {
+       return Container(
+         child: foto == null ? Text("vacio"): Image.file(foto),
+         height: 100,
+         width: 100,
+         padding: EdgeInsets.only(left:  10.0),
+
+       );
+       /* Image(
+
+        image: AssetImage( foto == null ? 'assets/no-image.png' : foto.path),
+        height: 300.0,
+        fit: BoxFit.cover,
+
+      ); */
+    }
   }
 
+  _processImage(ImageSource origin) async {
+    final fotonew = await ImagePicker.pickImage(source: origin);
+    if (foto != null) {
+      petModel.photo = null;
+    }
+    setState(() {
+      foto = fotonew;
+    });
+  }
 
+  _selectPhoto() async {
+    _processImage(ImageSource.gallery);
+  }
+
+  _takePhoto() async {
+    _processImage(ImageSource.camera);
+  }
+
+  void _submit() async {
+    if( !formKey.currentState.validate() ) return;
+    formKey.currentState.save();
+    if (foto != null) {
+      petModel.photo = await petservice.uploadImage(foto);
+      print(petModel.photo);
+    }
+    petservice.registerPet(petModel, this.userId);    
+  }
 }

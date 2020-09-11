@@ -10,6 +10,7 @@ String businessProfileModelToJson(BusinessProfileModel data) => json.encode(data
 
 class BusinessProfileModel {
     BusinessProfileModel({
+        this.id,
         this.name,
         this.password,
         this.lastName,
@@ -20,6 +21,7 @@ class BusinessProfileModel {
         this.owner,
     });
 
+    int id;
     String name;
     String password;
     String lastName;
@@ -30,6 +32,7 @@ class BusinessProfileModel {
     bool owner;
 
     factory BusinessProfileModel.fromJson(Map<String, dynamic> json) => BusinessProfileModel(
+        id: json["id"],
         name: json["name"],
         password: json["password"],
         lastName: json["lastName"],
@@ -41,6 +44,7 @@ class BusinessProfileModel {
     );
 
     Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "password": password,
         "lastName": lastName,

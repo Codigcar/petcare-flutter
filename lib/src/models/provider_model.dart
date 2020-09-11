@@ -10,6 +10,7 @@ String providerModelToJson(ProviderModel data) => json.encode(data.toJson());
 
 class ProviderModel {
     ProviderModel({
+        this.id,
         this.businessName,
         this.region,
         this.address,
@@ -19,6 +20,7 @@ class ProviderModel {
         this.photo,
     });
 
+    int id;
     String businessName;
     String region;
     String address;
@@ -28,6 +30,7 @@ class ProviderModel {
     String photo;
 
     factory ProviderModel.fromJson(Map<String, dynamic> json) => ProviderModel(
+        id: json["id"],
         businessName: json["businessName"],
         region: json["region"],
         address: json["address"],
@@ -38,6 +41,7 @@ class ProviderModel {
     );
 
     Map<String, dynamic> toJson() => {
+        "id":id,
         "businessName": businessName,
         "region": region,
         "address": address,

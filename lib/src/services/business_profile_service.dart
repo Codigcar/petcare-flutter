@@ -23,4 +23,15 @@ class BusinessProfileService {
       return false;
     }
   }
+
+  
+
+  /*static Future<List<ServiceCategory>> getServiceCategories( ) async {
+    final resp= await   http.get('https://rapisolverprueba.herokuapp.com/api/servicecategories');
+      List<ServiceCategory> servicecategories = (json.decode(resp.body) as List)
+      .map((data) => ServiceCategory.fromJson(data))
+      .toList();
+     return servicecategories;
+
+  } */
 }

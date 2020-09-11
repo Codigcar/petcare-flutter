@@ -18,4 +18,12 @@ class ProviderService {
       return false;
     }
   }
+
+  Future<List<ProviderModel>> getAllProviders() async {
+    final url = '$_url/providers';
+    final resp = await http.get(url);
+     List<ProviderModel> decodedData = (json.decode(resp.body) as List)
+    .map((data) => ProviderModel.fromJson(data)).toList();
+    return decodedData;
+  }
 }
