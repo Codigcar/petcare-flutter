@@ -10,6 +10,7 @@ String petModelToJson(PetModel data) => json.encode(data.toJson());
 
 class PetModel {
     PetModel({
+        this.id,
         this.name,
         this.age = 0,
         this.breed,
@@ -17,6 +18,7 @@ class PetModel {
         this.gender,
     });
 
+    int id;
     String name;
     int age;
     String breed;
@@ -24,6 +26,7 @@ class PetModel {
     String gender;
 
     factory PetModel.fromJson(Map<String, dynamic> json) => PetModel(
+        id: json["id"],
         name: json["name"],
         age: json["age"],
         breed: json["breed"],
@@ -32,6 +35,7 @@ class PetModel {
     );
 
     Map<String, dynamic> toJson() => {
+        "id":id,
         "name": name,
         "age": age,
         "breed": breed,

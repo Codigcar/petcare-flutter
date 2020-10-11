@@ -52,6 +52,13 @@ class Storage {
     _prefs.setInt('userId', value );
   }
 
+  get personProfileId{
+    return _prefs.getInt('personProfileId') ?? 0;
+  }
+  set personProfileId(int value){
+    _prefs.setInt('personProfileId', value);
+  }
+
   get businessProfileId {
     return _prefs.getInt('businessProfileId') ?? 0;
   }

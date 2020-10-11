@@ -45,4 +45,16 @@ class PetService {
     final respData = json.decode(resp.body);
     return respData['secure_url'];
   }
+
+  Future<List<PetModel>> getAllPetsByPersonId(int personId) async {
+    final url = '$_url/people/'+personId.toString()+'/pets';
+    final resp = await http.get(url);
+    List<PetModel> petsBD = (json.decode(resp.body) as List).map((data) => PetModel.fromJson(data)).toList();
+    print(petsBD.length);
+    print(petsBD[0].name);
+    print('-------epts');
+
+    return petsBD;
+
+  }
 }

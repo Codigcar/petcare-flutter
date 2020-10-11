@@ -3,12 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:petcare/src/bloc/login_bloc.dart';
 import 'package:petcare/src/bloc/provider.dart';
+import 'package:petcare/src/services/account_service.dart';
+import 'package:petcare/src/services/person_profile_service.dart';
 import 'package:petcare/src/services/user_service.dart';
+import 'package:petcare/src/storage/storage.dart';
 import 'package:petcare/src/utils/utils.dart';
 
 class LoginPage extends StatelessWidget {
 
   final userProvider = new UserService();
+  final accountService = new AccountService();
+  bool dataEncontrada = false;
+  final _storage = new Storage();
+  final personProfileService = new PersonProfileService();
 
   @override
   Widget build(BuildContext context) {
@@ -216,14 +223,35 @@ class LoginPage extends StatelessWidget {
     print('Email: ${ bloc.get_email }');
     print('Email: ${ bloc.get_password }');
 
-    Map info = await userProvider.login(bloc.get_email, bloc.get_password);
+    accountService.getAllAccounts()
+    .then((value) {
+      for (var i = 0; i < value.length; i++) {
+        if(value[i].user == bloc.get_email && value[i].password == bloc.get_password){
+          _savePersonProfileId(value[i].user);
+          Navigator.pushNamed(context, 'menu_navbar');
+          dataEncontrada = true;
+          break;
 
-    if ( info['ok'] ) {
+        }
+      }
+      if(dataEncontrada == false){
+        showAlert(context, 'Datos Incorrectos!');
+      }
+    });
+
+
+  /*   if ( info['ok'] ) {
       Navigator.pushReplacementNamed(context, 'home');
     } else {
       showAlert(context, info['mensaje']);
-    }
+    } */
 
     /* Navigator.pushNamed(context, 'home'); */
+  }
+
+  _savePersonProfileId(String email) async {
+    final resp = await personProfileService.getPersonProfileByEmail(email).then((value) => _storage.personProfileId=value.id);
+          print(_storage.personProfileId);
+          print("-----------------");
   }
 }

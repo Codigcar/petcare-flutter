@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/src/models/product_model.dart';
 import 'package:petcare/src/models/product_type_model.dart';
 import 'package:petcare/src/models/provider_model.dart';
+import 'package:petcare/src/pages/register_cita_page.dart';
+import 'package:petcare/src/services/product_service.dart';
 import 'package:petcare/src/services/product_type_service.dart';
+import 'package:petcare/src/services/provider_join_product_type_service.dart';
 import 'package:petcare/src/services/provider_service.dart';
 
 class DetailProviderPage extends StatefulWidget {
@@ -14,14 +18,18 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
   final titleStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(46, 177, 185, 1.0));
   final subtitleStyle = TextStyle(fontSize: 18.0, color: Colors.grey);
   final colorPetCare = Color.fromRGBO(46, 177, 185, 1.0);
-  List<String> _powers = ['Volar', 'Rayos X', 'Super Aliento', 'Super Fuerza'];
   final productTypeService = new ProductTypeService();
   List<ProductTypeModel> productsType = new List<ProductTypeModel>();
-  String _selectedOption = 'Servicios Generales';
   final providerService = ProviderService();
+  final providerJoinProductTypeService = new ProviderJoinProductTypeService();
+  final productService = new ProductService();
+
+  
+  String _selectedOption = 'Servicios Generales';
+  int _selectedProductType = 1 ;
 
 
- /*  @override
+  /* @override
   void initState() {
     super.initState();
     
@@ -31,8 +39,8 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
       print("está null personProfileModel.phtoo");
     } */
     /* this.userId = _storage.userId; */
-  } */
-
+  }
+ */
   @override
   Widget build(BuildContext context) {
     final ProviderModel getProvider = ModalRoute.of(context).settings.arguments;
@@ -45,8 +53,8 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
             _titleAndSubtitleAndStar(getProvider),
             _actions(),
             _descriptionText(),
-            _dropDown(),
-            _createListing()
+            _dropDown(getProvider),
+            _createListing(getProvider,_selectedProductType)
           ],
         ),
       ),
@@ -57,7 +65,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     return Container(
       width: double.infinity,
       child: Image(
-           image: NetworkImage(provider.photo), width: double.infinity,
+           image: NetworkImage(/* provider.photo */ 'assets/no-image.png'), width: double.infinity,
            fit: BoxFit.cover,
            height: 200.0,
       ),
@@ -107,7 +115,8 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
       children: <Widget>[
         Icon( icon, color: Color.fromRGBO(46, 177, 185, 1.0), size: 40.0,),
         SizedBox(height: 5.0),
-        Text( name, style: TextStyle(fontSize: 15.0, color: Color.fromRGBO(46, 177, 185, 1.0)), )
+        Text( name, style: TextStyle(fontSize: 15.0, color: Color.fromRGBO(46, 177, 185, 1.0)), ),
+        
       ],
     );
   }
@@ -121,19 +130,19 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
       );
   }
 
-  List<DropdownMenuItem<String>> getOptionsDropdown(List<ProductTypeModel> listproducts) {
+  List<DropdownMenuItem<String>> getOptionsDropdown(List<ProductTypeModel> listproductsType) {
     List<DropdownMenuItem<String>> list = new List();
-    listproducts.forEach((element) {
-      list.add(DropdownMenuItem(child: Text(element.name), value: element.name,));
+    listproductsType.forEach((element) {
+      list.add(DropdownMenuItem(child: Text(element.name), value: element.name ,));
     });
     return list;
   }
 
-  Widget _dropDown(){
+  Widget _dropDown(ProviderModel provider){
     return FutureBuilder(
-      future: productTypeService.getAllProducsType(),
+      future: providerJoinProductTypeService.getProductTypeByProviderId(provider.id),
       builder: (BuildContext context, AsyncSnapshot<List<ProductTypeModel>> snapshot) {
-        if(snapshot.connectionState==ConnectionState.waiting){
+        if(snapshot.connectionState == ConnectionState.waiting){
           return Center(child: CircularProgressIndicator());
         }
         else {
@@ -149,6 +158,13 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                   onChanged: (value) {
                     setState(() {
                       _selectedOption = value;
+                      for (var i = 0; i < snapshot.data.length; i++) {
+                        if(snapshot.data[i].name == _selectedOption){
+                          print( snapshot.data[i].id);
+                          _selectedProductType= snapshot.data[i].id;
+                        }
+                      }
+                    
                     });
                   },)
               ],
@@ -159,7 +175,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     );
   }
 
-  Widget _item( BuildContext context,ProviderModel product){
+  Widget _item( BuildContext context,ProductModel product, ProviderModel provider){
     return Container(
       margin: EdgeInsets.only(top: 20.0),
       height: 180,
@@ -172,7 +188,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                     image: DecorationImage(
-                      image: NetworkImage(product.photo),
+                      image: NetworkImage(/* product.photo */ 'assets/no-image.png'),
                       fit: BoxFit.cover,
                     ),
                     ),
@@ -194,8 +210,8 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                   Text(product.description), */
                   Expanded(
                     child: ListTile(
-                      title: Text(product.businessName),
-                      subtitle: Text(product.businessName),
+                      title: Text(product.name),
+                      subtitle: Text(product.description),
                     ),
                   ),
                   Align(
@@ -207,7 +223,10 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
                       textColor: Colors.white,
                       color: Colors.red,
-                      onPressed: () {},),
+                      onPressed: () {
+                       /*  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterCitaPage())); */
+                        Navigator.pushNamed(context, 'register_cita' , arguments: [provider,product]);
+                      },),
                   )
                 ],
               ),
@@ -218,11 +237,11 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     );
   }
 
-  Widget _createListing() {
+  Widget _createListing(ProviderModel provider, int _selectedProductType) {
     return FutureBuilder(
-        future: providerService.getAllProviders(),
+        future: productService.getAllProductsByProviderIdAndProductTypeId(provider.id, _selectedProductType),
         builder: (BuildContext context,
-            AsyncSnapshot<List<ProviderModel>> snapshot) {
+            AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData) {
             final products = snapshot.data;
             return ListView.builder(
@@ -230,7 +249,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                 physics: ScrollPhysics(),
                 itemCount: products.length,
                 itemBuilder: (context, index) =>
-                    _item(context, products[index]));
+                    _item(context, products[index], provider));
           } else {
             return Center(child: CircularProgressIndicator());
           }

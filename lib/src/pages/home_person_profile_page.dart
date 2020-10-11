@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:petcare/src/models/provider_model.dart';
 import 'package:petcare/src/services/provider_service.dart';
 
-class MainPersonProfilePage extends StatefulWidget {
+class HomePersonProfilePage extends StatefulWidget {
   @override
   _MainPersonProfilePageState createState() => _MainPersonProfilePageState();
 }
 
-class _MainPersonProfilePageState extends State<MainPersonProfilePage> {
+class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
   final providerService = ProviderService();
   /* List<ProviderModel> providers = new List<ProviderModel>(); */
 
@@ -54,7 +54,7 @@ class _MainPersonProfilePageState extends State<MainPersonProfilePage> {
                   ? Image(image: AssetImage('assets/no-image.png'))
                   : FadeInImage(
                       placeholder: AssetImage('assets/jar-loading.gif'),
-                      image: NetworkImage(product.photo),
+                      image: NetworkImage(/* product.photo */'assets/no-image.png'),
                       height: 300.0,
                       width: double.infinity,
                       fit: BoxFit.cover,

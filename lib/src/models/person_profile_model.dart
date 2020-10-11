@@ -18,6 +18,7 @@ class PersonProfileModel {
         this.phone,
         this.age,
         this.photo,
+        this.id,
     });
 
     String name;
@@ -28,8 +29,10 @@ class PersonProfileModel {
     String phone;
     String age;
     String photo;
+    int id;
 
     factory PersonProfileModel.fromJson(Map<String, dynamic> json) => PersonProfileModel(
+        id: json["id"],
         name: json["name"],
         password: json["password"],
         lastName: json["lastName"],
@@ -41,6 +44,7 @@ class PersonProfileModel {
     );
 
     Map<String, dynamic> toJson() => {
+      "id":id,
         "name": name,
         "password": password,
         "lastName": lastName,

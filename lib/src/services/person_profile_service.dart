@@ -47,4 +47,20 @@ class PersonProfileService {
     final respData = json.decode(resp.body);
     return respData['secure_url'];
   }
+
+  Future<PersonProfileModel> getPersonProfileByEmail(String email) async{
+    final url = '$_url/people/email/'+email;
+    final resp = await http.get(url);
+    PersonProfileModel decodedData = PersonProfileModel.fromJson(json.decode(resp.body));
+    return decodedData;
+    
+  }
+
+ /* Future<List<ProductModel>> getAllProductsByProviderIdAndProductTypeId(int providerId, int productTypeId) async {
+    final url = '$_url/business/0/providers/'+providerId.toString()+'/products-type/'+productTypeId.toString()+'/products';
+    final resp = await http.get(url);
+     List<ProductModel> decodedData = (json.decode(resp.body) as List)
+    .map((data) => ProductModel.fromJson(data)).toList();
+    return decodedData;
+  }*/
 }
