@@ -6,6 +6,7 @@ import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
 import 'package:petcare/src/pages/home_person_profile_page.dart';
 import 'package:petcare/src/pages/menu_navbar.dart';
+import 'package:petcare/src/pages/person_request_page.dart';
 import 'package:petcare/src/pages/register_business_profile_page.dart';
 import 'package:petcare/src/pages/register_cita_page.dart';
 import 'package:petcare/src/pages/register_page.dart';
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
         'detail_provider' : (BuildContext context ) => DetailProviderPage(),
         'menu_navbar':(BuildContext context ) => BottomNavBar(),
         'register_cita': (BuildContext context ) => RegisterCitaPage(),
+        'person_request_list': (BuildContext context ) => PersonRequestPage(),
         
       },
       theme: ThemeData(

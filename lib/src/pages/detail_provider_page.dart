@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:petcare/src/models/product_model.dart';
 import 'package:petcare/src/models/product_type_model.dart';
 import 'package:petcare/src/models/provider_model.dart';
-import 'package:petcare/src/pages/register_cita_page.dart';
 import 'package:petcare/src/services/product_service.dart';
 import 'package:petcare/src/services/product_type_service.dart';
 import 'package:petcare/src/services/provider_join_product_type_service.dart';
@@ -65,7 +64,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     return Container(
       width: double.infinity,
       child: Image(
-           image: NetworkImage(/* provider.photo */ 'assets/no-image.png'), width: double.infinity,
+           image: NetworkImage(provider.photo), width: double.infinity,
            fit: BoxFit.cover,
            height: 200.0,
       ),

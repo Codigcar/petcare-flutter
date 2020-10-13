@@ -54,7 +54,7 @@ class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
                   ? Image(image: AssetImage('assets/no-image.png'))
                   : FadeInImage(
                       placeholder: AssetImage('assets/jar-loading.gif'),
-                      image: NetworkImage(/* product.photo */'assets/no-image.png'),
+                      image: NetworkImage( product.photo ),
                       height: 300.0,
                       width: double.infinity,
                       fit: BoxFit.cover,
