@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/bloc/provider.dart';
+import 'package:petcare/src/pages/detail_pet_page.dart';
 import 'package:petcare/src/pages/detail_provider_page.dart';
 
 import 'package:petcare/src/pages/home_page.dart';
@@ -69,7 +70,8 @@ class _MyAppState extends State<MyApp> {
         'menu_navbar':(BuildContext context ) => BottomNavBar(),
         'register_cita': (BuildContext context ) => RegisterCitaPage(),
         'person_request_list': (BuildContext context ) => PersonRequestPage(),
-        
+        'detail_pet': (BuildContext context ) => DetailPetPage(),
+
       },
       theme: ThemeData(
         primaryColor: Color.fromRGBO(46, 177, 185, 1.0)

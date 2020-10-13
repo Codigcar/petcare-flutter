@@ -14,9 +14,9 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( title: Text('Request'),),
-      body: 
-          _requestList()
+      body:SafeArea(
+            child: _requestList()
+          )
        
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petcare/constants.dart';
 import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/models/pet_model.dart';
 
@@ -75,33 +74,33 @@ class PetsPage extends StatelessWidget {
             placeholder: AssetImage('assets/jar-loading.gif'),
             image: NetworkImage(pet.photo),
             fadeInDuration: Duration(milliseconds: 200),
-            /* height: 200.0, */
             fit: BoxFit.cover,
           ), 
-          /* Container(
-            /* padding: EdgeInsets.all(10.0), */
-            child: Text('Text prueba3'),
-            color: Colors.red,
-          ) */
     );
 
-    return Container(
-      margin: EdgeInsets.all(10.0),
-      padding: EdgeInsets.all(5.0),
-      
-      decoration: BoxDecoration(
-          color: colorPetCare,
-          borderRadius: BorderRadius.circular(30.0),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10.0,
-                spreadRadius: 2.0,
-                offset: Offset(2.0, 10.0))
-          ]),
-      child:  ClipRRect(
+    return Material(
+      child: InkWell(
+        onTap: () =>Navigator.pushNamed(context, 'detail_pet', arguments: pet),
         borderRadius: BorderRadius.circular(30.0),
-        child: card,
+        child: Container(
+          margin: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(5.0),
+          
+          decoration: BoxDecoration(
+              color: colorPetCare,
+              borderRadius: BorderRadius.circular(30.0),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10.0,
+                    spreadRadius: 2.0,
+                    offset: Offset(2.0, 10.0))
+              ]),
+          child:  ClipRRect(
+            borderRadius: BorderRadius.circular(30.0),
+            child: card,
+          ),
+        ),
       ),
     );
   }

@@ -13,11 +13,10 @@ class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Bienvenido'),
-      ),
-      body: _createListing(),
+    return  Scaffold(
+        body: SafeArea(
+          child: _createListing()
+        ),
     );
   }
 

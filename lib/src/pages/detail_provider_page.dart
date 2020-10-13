@@ -43,7 +43,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
   @override
   Widget build(BuildContext context) {
     final ProviderModel getProvider = ModalRoute.of(context).settings.arguments;
-
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -66,7 +66,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
       child: Image(
            image: NetworkImage(provider.photo), width: double.infinity,
            fit: BoxFit.cover,
-           height: 200.0,
+           height: 250.0,
       ),
     );
     
@@ -75,6 +75,13 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
   Widget _titleAndSubtitleAndStar(ProviderModel provider) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(40.0),
+          topRight: const Radius.circular(40.0),
+        )
+      ),
       child: Row(
         children: <Widget>[
           _titleAndSubtitle(provider),
