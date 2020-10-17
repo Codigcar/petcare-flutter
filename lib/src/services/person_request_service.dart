@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:petcare/src/models/request.dart';
+import 'package:petcare/src/models/request_model.dart';
 
 
 class RequestService {

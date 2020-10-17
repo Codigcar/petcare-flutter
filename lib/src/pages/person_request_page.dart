@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petcare/src/models/request.dart';
+import 'package:petcare/src/models/request_model.dart';
 import 'package:petcare/src/services/person_request_service.dart';
 
 class PersonRequestPage extends StatefulWidget {

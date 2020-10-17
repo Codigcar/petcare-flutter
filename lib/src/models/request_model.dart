@@ -16,6 +16,8 @@ class RequestModel {
         this.petName,
         this.status,
         this.personName,
+        this.personPhone,
+        this.petPhoto
     });
 
     int id;
@@ -28,6 +30,8 @@ class RequestModel {
     String petName;
     int status;
     String personName;
+    String personPhone;
+    String petPhoto;
 
     factory RequestModel.fromJson(Map<String, dynamic> json) => RequestModel(
         id: json["id"],
@@ -40,6 +44,8 @@ class RequestModel {
         petName: json["petName"],
         status: json["status"],
         personName: json["personName"],
+        personPhone: json["personPhone"],
+        petPhoto: json["petPhoto"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -53,5 +59,7 @@ class RequestModel {
         "petName": petName,
         "status": status,
         "personName": personName,
+        "personPhone": personPhone,
+        "petPhoto": petPhoto
     };
 }

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:petcare/src/bloc/provider.dart';
 import 'package:petcare/src/pages/detail_pet_page.dart';
 import 'package:petcare/src/pages/detail_provider_page.dart';
+import 'package:petcare/src/pages/home_business_profile_page.dart';
 
 import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
 import 'package:petcare/src/pages/home_person_profile_page.dart';
-import 'package:petcare/src/pages/menu_navbar.dart';
+import 'package:petcare/src/pages/menu_person_navbar.dart';
 import 'package:petcare/src/pages/person_request_page.dart';
 import 'package:petcare/src/pages/register_business_profile_page.dart';
 import 'package:petcare/src/pages/register_cita_page.dart';
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         // ... other locales the app supports
       ],
 
-      initialRoute: 'login',
+      initialRoute: 'home_business',
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'home': (BuildContext context) => HomePage(),
@@ -71,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         'register_cita': (BuildContext context ) => RegisterCitaPage(),
         'person_request_list': (BuildContext context ) => PersonRequestPage(),
         'detail_pet': (BuildContext context ) => DetailPetPage(),
+        'home_business' :(BuildContext context ) => HomeBusinessPage(),
 
       },
       theme: ThemeData(
