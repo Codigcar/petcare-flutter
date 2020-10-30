@@ -10,7 +10,6 @@ import 'package:petcare/src/storage/storage.dart';
 import 'package:petcare/src/utils/utils.dart';
 
 class LoginPage extends StatelessWidget {
-
   final userProvider = new UserService();
   final accountService = new AccountService();
   bool dataEncontrada = false;
@@ -114,9 +113,10 @@ class LoginPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SafeArea(
-              child: Container(
-            height: 180.0,
-          )),
+            child: Container(
+              height: 180.0,
+            ),
+          ),
           Container(
             width: totalSize.width * 0.85,
             decoration: BoxDecoration(
@@ -145,9 +145,9 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           FlatButton(
-            child: Text('Registrate'),
-            onPressed: () => Navigator.pushReplacementNamed(context, 'register')
-          ),
+              child: Text('Registrate'),
+              onPressed: () =>
+                  Navigator.pushReplacementNamed(context, 'register')),
           SizedBox(height: 100.0),
         ],
       ),
@@ -197,50 +197,48 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _createButton( LoginBloc bloc) {
+  Widget _createButton(LoginBloc bloc) {
     return StreamBuilder(
-      stream: bloc.formValidStream ,
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-
+      stream: bloc.formValidStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         return RaisedButton(
-          child: Container(
-            child: Text('Login'),
-            padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-          ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-          /* elevation: 0.0, */
-          color: Color.fromRGBO(46, 177, 185, 1.0),
-          textColor: Colors.white,
-          onPressed: snapshot.hasData? () => _printDataEmailPassword(bloc, context) : null
-        );
-
+            child: Container(
+              child: Text('Login'),
+              padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0)),
+            /* elevation: 0.0, */
+            color: Color.fromRGBO(46, 177, 185, 1.0),
+            textColor: Colors.white,
+            onPressed: snapshot.hasData
+                ? () => _printDataEmailPassword(bloc, context)
+                : null);
       },
     );
   }
 
   _printDataEmailPassword(LoginBloc bloc, BuildContext context) async {
     print('===========');
-    print('Email: ${ bloc.get_email }');
-    print('Email: ${ bloc.get_password }');
+    print('Email: ${bloc.get_email}');
+    print('Email: ${bloc.get_password}');
 
-    accountService.getAllAccounts()
-    .then((value) {
+    accountService.getAllAccounts().then((value) {
       for (var i = 0; i < value.length; i++) {
-        if(value[i].user == bloc.get_email && value[i].password == bloc.get_password){
+        if (value[i].user == bloc.get_email &&
+            value[i].password == bloc.get_password) {
           _savePersonProfileId(value[i].user);
           Navigator.pushNamed(context, 'menu_navbar');
           dataEncontrada = true;
           break;
-
         }
       }
-      if(dataEncontrada == false){
+      if (dataEncontrada == false) {
         showAlert(context, 'Datos Incorrectos!');
       }
     });
 
-
-  /*   if ( info['ok'] ) {
+    /*   if ( info['ok'] ) {
       Navigator.pushReplacementNamed(context, 'home');
     } else {
       showAlert(context, info['mensaje']);
@@ -250,8 +248,10 @@ class LoginPage extends StatelessWidget {
   }
 
   _savePersonProfileId(String email) async {
-    final resp = await personProfileService.getPersonProfileByEmail(email).then((value) => _storage.personProfileId=value.id);
-          print(_storage.personProfileId);
-          print("-----------------");
+    final resp = await personProfileService
+        .getPersonProfileByEmail(email)
+        .then((value) => _storage.personProfileId = value.id);
+    print(_storage.personProfileId);
+    print("-----------------");
   }
 }

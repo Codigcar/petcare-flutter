@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/bloc/provider.dart';
-import 'package:petcare/src/pages/detail_pet_page.dart';
-import 'package:petcare/src/pages/detail_provider_page.dart';
-import 'package:petcare/src/pages/home_business_profile_page.dart';
+import 'package:petcare/src/pages/person_detail_pet_page.dart';
+import 'package:petcare/src/pages/person_detail_provider_page.dart';
+import 'package:petcare/src/pages/business_home_page.dart';
 
 import 'package:petcare/src/pages/home_page.dart';
 import 'package:petcare/src/pages/login_page.dart';
-import 'package:petcare/src/pages/home_person_profile_page.dart';
-import 'package:petcare/src/pages/menu_person_navbar.dart';
+import 'package:petcare/src/pages/person_home_page.dart';
+import 'package:petcare/src/pages/business_menu_navbar.dart';
+import 'package:petcare/src/pages/person_menu_navbar.dart';
 import 'package:petcare/src/pages/person_request_page.dart';
-import 'package:petcare/src/pages/register_business_profile_page.dart';
-import 'package:petcare/src/pages/register_cita_page.dart';
-import 'package:petcare/src/pages/register_page.dart';
-import 'package:petcare/src/pages/register_pet_page.dart';
-import 'package:petcare/src/pages/register_person_profile_page.dart';
-import 'package:petcare/src/pages/register_provider_page.dart';
+import 'package:petcare/src/pages/business_register_profile_page.dart';
+import 'package:petcare/src/pages/person_register_cita_page.dart';
+import 'package:petcare/src/pages/login_register_page.dart';
+import 'package:petcare/src/pages/person_register_pet_page.dart';
+import 'package:petcare/src/pages/person_register_profile_page.dart';
+import 'package:petcare/src/pages/business_register_provider_page.dart';
 import 'package:petcare/src/storage/storage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
         // ... other locales the app supports
       ],
 
-      initialRoute: 'home_business',
+      initialRoute: 'home_business_nabvar',
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'home': (BuildContext context) => HomePage(),
@@ -73,6 +74,8 @@ class _MyAppState extends State<MyApp> {
         'person_request_list': (BuildContext context ) => PersonRequestPage(),
         'detail_pet': (BuildContext context ) => DetailPetPage(),
         'home_business' :(BuildContext context ) => HomeBusinessPage(),
+        'home_business_nabvar' :(BuildContext context ) => MenuBusinessNavbarPage(),
+
 
       },
       theme: ThemeData(

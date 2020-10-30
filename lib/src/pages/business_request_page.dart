@@ -3,15 +3,16 @@ import 'package:petcare/constants.dart';
 import 'package:petcare/src/models/request_model.dart';
 import 'package:petcare/src/services/business_request_service.dart';
 
-class HomeBusinessPage extends StatefulWidget {
+class BusinessRequestAccepted extends StatefulWidget {
+  const BusinessRequestAccepted({Key key}) : super(key: key);
   @override
-  _HomeBusinessPageState createState() => _HomeBusinessPageState();
+  _BusinessRequestAcceptedState createState() => _BusinessRequestAcceptedState();
 }
 
-class _HomeBusinessPageState extends State<HomeBusinessPage> {
-
+class _BusinessRequestAcceptedState extends State<BusinessRequestAccepted> {
+ 
   final businessRequestService = new BusinessRequestService();
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,13 +48,13 @@ class _HomeBusinessPageState extends State<HomeBusinessPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           child: Column(
             children: <Widget>[
+              if(request.status == 0 ) 
               Container(
                 padding: EdgeInsets.all(20.0),
                 child: Row(
                   children: [
                     Expanded(
                       child: ListTile(
-                       /*  leading: Icon(Icons.photo_album, color: Colors.blue), */
                         title: Container(
                           padding: EdgeInsets.only(top: 20.0),
                           child: Text(request.productName)),
@@ -92,17 +93,6 @@ class _HomeBusinessPageState extends State<HomeBusinessPage> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    /* padding: EdgeInsets.only(left: 20.0), */
-                    child: FlatButton(onPressed: () {}, child: Text('Rechazar', style: TextStyle(color: Colors.red)))),
-                  Container(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: FlatButton(onPressed: () {}, child: Text('Aceptar', style: TextStyle(color: Colors.green),))),
-                ],
-              )
             ],
           ),
       ),
