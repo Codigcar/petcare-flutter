@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/src/pages/person_config_perfil_page.dart';
 import 'package:petcare/src/pages/person_home_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:petcare/src/pages/person_pets_page.dart';
@@ -22,8 +23,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       new RegisterPersonProfilePage();
   final PetsPage _petsPage = new PetsPage();
   final RegisterPetPage _registerPetPage = new RegisterPetPage();
-  final RegisterBusinessProfile _registerBusinessProfile =
-      new RegisterBusinessProfile();
+  final PerfilPage _personPerfilPage = new PerfilPage();
   final PersonRequestPage _personRequestPage = new PersonRequestPage();
 
   Widget _pageChooser(int page) {
@@ -41,7 +41,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         return _registerPetPage;
         break;
       case 4:
-        return _registerBusinessProfile;
+        return _personPerfilPage;
         break;
     }
   }

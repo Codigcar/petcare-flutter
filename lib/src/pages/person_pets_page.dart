@@ -68,8 +68,7 @@ class PetsPage extends StatelessWidget {
     final card = Container(
       child: FadeInImage(
         placeholder: AssetImage('assets/jar-loading.gif'),
-        image: NetworkImage(
-            'https://res.cloudinary.com/dggqauzyy/image/upload/v1605497482/onl9c1ln7chphrupndqm.jpg'),
+        image: NetworkImage(pet.photo),
         fadeInDuration: Duration(milliseconds: 200),
         fit: BoxFit.cover,
       ),

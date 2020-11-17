@@ -50,7 +50,18 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
                   child: Container(
                     /* color: Colors.black, */
                     child: ListTile(
-                      leading: Icon(Icons.photo, color: Colors.blue),
+                      leading: Container(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: FadeInImage(
+                            placeholder: AssetImage('assets/jar-loading.gif'),
+                            image: NetworkImage(request.petPhoto),
+                            fadeInDuration: Duration(milliseconds: 200),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                      /* Icon(Icons.photo, color: Colors.blue) */,
                       title: Text(request
                           .veterinaryName /* , style: TextStyle(color: Colors.white) */),
                       subtitle: Text(request

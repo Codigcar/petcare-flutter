@@ -58,6 +58,13 @@ class PersonProfileService {
     return decodedData;
   }
 
+  Future<PersonProfileModel> getPersonProfileById(int personId) async {
+    final url = '$_url/people/' + personId.toString();
+    final resp = await http.get(url);
+    PersonProfileModel decodedData =
+        PersonProfileModel.fromJson(json.decode(resp.body));
+    return decodedData;
+  }
   /* Future<List<ProductModel>> getAllProductsByProviderIdAndProductTypeId(int providerId, int productTypeId) async {
     final url = '$_url/business/0/providers/'+providerId.toString()+'/products-type/'+productTypeId.toString()+'/products';
     final resp = await http.get(url);

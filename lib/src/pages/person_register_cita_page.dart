@@ -7,7 +7,6 @@ import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/storage/storage.dart';
 import 'package:petcare/src/utils/utils.dart' as utils;
 
-
 class RegisterCitaPage extends StatefulWidget {
   @override
   _RegisterCitaPageState createState() => _RegisterCitaPageState();
@@ -20,12 +19,12 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
   final petServide = new PetService();
   List<PetModel> petList = new List<PetModel>();
   final _storage = new Storage();
-  String _selectedOption='negrote';
+  String _selectedOption = 'negrote';
 
- @override
+  @override
   void initState() {
     super.initState();
-     _loadPetSelectedOption();
+    _loadPetSelectedOption();
   }
 
   @override
@@ -34,113 +33,114 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
     final List<Object> objectList = ModalRoute.of(context).settings.arguments;
     final ProviderModel getProvider = objectList[0];
     final ProductModel getProduct = objectList[1];
-    
 
     return Scaffold(
-       body: Stack(
-         children: [
-           Positioned.fill(
-             child: Column(
-               children: [
-                 Expanded(
-                   child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/jar-loading.gif') /* NetworkImage('assets/no-image.png') */, /* 'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg' */
-                          fit: BoxFit.cover
-                        )
-                      ),
-                   )
-                 ),
-                 Expanded(
-                   child: Container(
-                     color: colorPetCare
-                   )
-                 )
-               ],
-             )
+      body: Stack(
+        children: [
+          Positioned.fill(
+              child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg'),
+
+                          /* AssetImage(
+                            'assets/jar-loading.gif') /* NetworkImage('assets/no-image.png') */,
+                         */ /* 'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg' */
+                          fit: BoxFit.cover)),
+                ),
+              ),
+              Expanded(child: Container(color: colorPetCare))
+            ],
+          )),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: MediaQuery.of(context).size.height *
+                    0.9 /* MediaQuery.of(context).size */,
+                margin: EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.only(top: 50.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0)),
+                child: Form(
+                    child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text('RESGISTRAR CITA', style: TextStyle(fontSize: 20.0)),
+                      SizedBox(height: 60.0),
+                      _categoryName(getProvider),
+                      SizedBox(height: 30.0),
+                      _serviceName(getProduct),
+                      SizedBox(height: 30.0),
+                      _createDate(context),
+                      SizedBox(height: 30.0),
+                      _startTime(),
+                      SizedBox(height: 30.0),
+                      _dropDown(),
+                      SizedBox(height: 80.0),
+                      Row(
+                        children: <Widget>[
+                          Expanded(child: _buttonCancel()),
+                          Expanded(child: _buttonRequest()),
+                        ],
+                      )
+                    ],
+                  ),
+                )),
+              ),
+            ),
           ),
-           SafeArea(
-             child: Align(
-               alignment: Alignment.center,
-               child: Container(
-                 height: MediaQuery.of(context).size.height*0.9 /* MediaQuery.of(context).size */,
-                 margin: EdgeInsets.symmetric(horizontal: 20.0),
-                 padding: EdgeInsets.only(top: 50.0),
-                 decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0)),
-                 child: Form(
-                           child: SingleChildScrollView(
-                              padding : EdgeInsets.symmetric(horizontal: 20.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Text('RESGISTRAR CITA', style: TextStyle(fontSize: 20.0)),
-                                  SizedBox(height: 60.0),
-                                  _categoryName(getProvider),
-                                  SizedBox(height: 30.0),
-                                  _serviceName(getProduct),
-                                  SizedBox(height: 30.0),
-                                  _createDate(context),
-                                  SizedBox(height: 30.0),
-                                  _startTime(),
-                                  SizedBox(height: 30.0),
-                                  _dropDown(),
-                                  SizedBox(height: 80.0),
-                                  Row(children: <Widget>[
-                                    Expanded(child: _buttonCancel()),
-                                    Expanded(child: _buttonRequest()),
-                                  ],)
-                                  
-                                 
-                                ],
-                              ),
-                            )
-                        ),
-               ),
-             ),
-           ),
-          
-         ],
-       ),
+        ],
+      ),
     );
   }
 
-  _loadPetSelectedOption() async{
-    final resp = await petServide.getAllPetsByPersonId(_storage.personProfileId)
-                      .then((value) => _selectedOption=value[0].name);
+  _loadPetSelectedOption() async {
+    final resp = await petServide
+        .getAllPetsByPersonId(_storage.personProfileId)
+        .then((value) => _selectedOption = value[0].name);
   }
 
-   List<DropdownMenuItem<String>> getOptionsDropdown(List<PetModel> listproductsType) {
+  List<DropdownMenuItem<String>> getOptionsDropdown(
+      List<PetModel> listproductsType) {
     List<DropdownMenuItem<String>> list = new List();
     listproductsType.forEach((element) {
-      list.add(DropdownMenuItem(child: Text(element.name), value: element.name ,));
+      list.add(DropdownMenuItem(
+        child: Text(element.name),
+        value: element.name,
+      ));
     });
     return list;
   }
 
-  Widget _dropDown(){
+  Widget _dropDown() {
     return FutureBuilder(
       future: petServide.getAllPetsByPersonId(_storage.personProfileId),
       builder: (BuildContext context, AsyncSnapshot<List<PetModel>> snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
-        }
-        else {
+        } else {
           petList = snapshot.data;
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 35.0,vertical: 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 0.0),
             child: Row(
               children: <Widget>[
                 Icon(Icons.select_all),
                 DropdownButton(
                   value: _selectedOption,
-                  items: getOptionsDropdown( petList),
+                  items: getOptionsDropdown(petList),
                   onChanged: (value) {
                     setState(() {
                       _selectedOption = value;
                     });
-                  },)
+                  },
+                )
               ],
             ),
           );
@@ -149,19 +149,18 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
     );
   }
 
-  Widget _buttonRequest(){
+  Widget _buttonRequest() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0), 
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
       child: RaisedButton(
         elevation: 10.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         color: colorPetCare,
         textColor: Colors.white,
         child: Text('Aceptar'),
-        onPressed: () {
-        
-        },
-        ),
+        onPressed: () {},
+      ),
       /* child: FloatingActionButton.extended(
         onPressed: () {}, 
         icon: Icon(Icons.check_circle,),
@@ -172,18 +171,17 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
     );
   }
 
-  Widget _buttonCancel(){
+  Widget _buttonCancel() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0), 
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
       child: RaisedButton(
         elevation: 10.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         color: Colors.white,
         textColor: colorPetCare,
         child: Text('Cancelar'),
-        onPressed: () {
-        
-        },
+        onPressed: () {},
       ),
       /* child: FloatingActionButton.extended(
         onPressed: () {}, 
@@ -195,46 +193,43 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
     );
   }
 
-
   Widget _categoryName(ProviderModel provider) {
     return TextFormField(
-      initialValue: provider.businessName ,
+      initialValue: provider.businessName,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Veterinaria',
-        hintText: 'Veterinaria',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Veterinaria',
+          hintText: 'Veterinaria',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)),
       validator: (value) {
-        if (value.length < 3 ){
+        if (value.length < 3) {
           return 'Nombre minimo a 3 caracteres';
         } else {
           return null;
         }
       },
-      onSaved: (newValue) => /* petModel.name = newValue */{},
+      onSaved: (newValue) => /* petModel.name = newValue */ {},
     );
   }
 
   Widget _serviceName(ProductModel product) {
-     return TextFormField(
+    return TextFormField(
       initialValue: product.name,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Servicio',
-        hintText: 'Servicio',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Servicio',
+          hintText: 'Servicio',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)),
       validator: (value) {
-        if (value.length < 3 ){
+        if (value.length < 3) {
           return 'Nombre minimo a 3 caracteres';
         } else {
           return null;
         }
       },
-      onSaved: (newValue) => /* petModel.name = newValue */{},
+      onSaved: (newValue) => /* petModel.name = newValue */ {},
     );
   }
 
@@ -249,7 +244,7 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
           suffixIcon: Icon(Icons.perm_contact_calendar),
           icon: Icon(Icons.calendar_today)),
       onTap: () {
-         FocusScope.of(context).requestFocus(new FocusNode());
+        FocusScope.of(context).requestFocus(new FocusNode());
         _selectDate(context);
       },
     );
@@ -262,7 +257,7 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
     final String formatted = serverFormater.format(displayDate);
     return formatted;
   }
-  
+
   void _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
         context: context,
@@ -282,15 +277,14 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
 
   Widget _startTime() {
     return TextFormField(
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Hora inicio',
-        hintText: 'Hora inicio',
-        icon: Icon(Icons.data_usage),
-        suffixIcon: Icon(Icons.info)
-      ),
-      validator: (value) {
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+            labelText: 'Hora inicio',
+            hintText: 'Hora inicio',
+            icon: Icon(Icons.data_usage),
+            suffixIcon: Icon(Icons.info)),
+        validator: (value) {
           if (utils.isNumeric(value)) {
             return null;
           } else {
@@ -298,7 +292,6 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
           }
         },
         onSaved: (newValue) {} /* petModel.age = int.parse(newValue) */
-    );
+        );
   }
-
 }

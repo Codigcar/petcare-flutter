@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/bloc/provider.dart';
+import 'package:petcare/src/pages/person_config_perfil_page.dart';
 import 'package:petcare/src/pages/person_detail_pet_page.dart';
 import 'package:petcare/src/pages/person_detail_provider_page.dart';
 import 'package:petcare/src/pages/business_home_page.dart';
@@ -77,6 +78,7 @@ class _MyAppState extends State<MyApp> {
         'home_business': (BuildContext context) => HomeBusinessPage(),
         'home_business_nabvar': (BuildContext context) =>
             MenuBusinessNavbarPage(),
+        'person_perfil': (BuildContext context) => PerfilPage(),
       },
       theme: ThemeData(primaryColor: Color.fromRGBO(46, 177, 185, 1.0)),
     ));

@@ -24,14 +24,14 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
 
   final _storage = new Storage();
 
-  int userId = 0;
+  int userId = 1;
 
   File foto;
 
   @override
   void initState() {
     super.initState();
-    this.userId = _storage.userId;
+    //this.userId = _storage.userId;
   }
 
   @override
@@ -48,25 +48,26 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
         ],
       ),
       body: Form(
-          key: formKey,
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            children: <Widget>[
-              _showPhoto(),
-              Divider(),
-              _inputName(),
-              Divider(),
-              _inputAge(),
-              Divider(),
-              _inputBreed(),
-              Divider(),
-              /* _inputPhoto(), */
-              Divider(),
-              _inputSex(),
-              Divider(),
-              _createButton()
-            ],
-          )),
+        key: formKey,
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          children: <Widget>[
+            _showPhoto(),
+            Divider(),
+            _inputName(),
+            Divider(),
+            _inputAge(),
+            Divider(),
+            _inputBreed(),
+            Divider(),
+            /* _inputPhoto(), */
+            Divider(),
+            _inputSex(),
+            Divider(),
+            _createButton()
+          ],
+        ),
+      ),
     );
   }
 
@@ -122,19 +123,6 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
       onSaved: (newValue) => petModel.breed = newValue,
     );
   }
-
-  /* Widget _inputPhoto() {
-    return TextFormField(
-      initialValue: petModel.photo,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-          labelText: 'Foto',
-          hintText: 'Foto',
-          icon: Icon(Icons.account_circle),
-          suffixIcon: Icon(Icons.accessibility)),
-      onSaved: (newValue) => petModel.photo = newValue,
-    );
-  }*/
 
   Widget _inputSex() {
     return TextFormField(
