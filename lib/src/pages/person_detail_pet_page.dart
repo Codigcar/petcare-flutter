@@ -17,7 +17,7 @@ class _DetailPetPageState extends State<DetailPetPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Pet'),
+        title: Text('Registro Medico'),
       ),
       body: Column(
         children: [
@@ -65,7 +65,7 @@ class _DetailPetPageState extends State<DetailPetPage> {
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          pet.gender + 'acho',
+                          pet.gender,
                           style: TextStyle(
                               color: colorPetCare,
                               fontSize: 20.0,

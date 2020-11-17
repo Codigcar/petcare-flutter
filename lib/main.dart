@@ -19,15 +19,15 @@ import 'package:petcare/src/pages/business_register_provider_page.dart';
 import 'package:petcare/src/storage/storage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
- 
-void main() async{ 
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   final _storage = new Storage();
   await _storage.initPrefs();
 
   runApp(MyApp());
 }
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -36,12 +36,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-
     // Mostrar token guardado
     /* final prefs = new UserPreferences();
     print( prefs.token ); */
     return Provider(
-      child: MaterialApp(
+        child: MaterialApp(
       title: 'Material App',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
@@ -57,35 +56,32 @@ class _MyAppState extends State<MyApp> {
             languageCode: 'zh'), // Chinese *See Advanced Locales below*
         // ... other locales the app supports
       ],
-
-      initialRoute: 'home_business_nabvar',
+      initialRoute: 'login',
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'home': (BuildContext context) => HomePage(),
         'register': (BuildContext context) => RegisterPage(),
-        'register_person_profile' : (BuildContext context ) => RegisterPersonProfilePage(),
-        'register_pet' : (BuildContext context ) => RegisterPetPage(),
-        'register_business_profile' : (BuildContext context ) => RegisterBusinessProfile(),
-        'register_provider' : (BuildContext context ) => RegisterProviderPage(),
-        'home_person_profile' : (BuildContext context ) => HomePersonProfilePage(),
-        'detail_provider' : (BuildContext context ) => DetailProviderPage(),
-        'menu_navbar':(BuildContext context ) => BottomNavBar(),
-        'register_cita': (BuildContext context ) => RegisterCitaPage(),
-        'person_request_list': (BuildContext context ) => PersonRequestPage(),
-        'detail_pet': (BuildContext context ) => DetailPetPage(),
-        'home_business' :(BuildContext context ) => HomeBusinessPage(),
-        'home_business_nabvar' :(BuildContext context ) => MenuBusinessNavbarPage(),
-
-
+        'register_person_profile': (BuildContext context) =>
+            RegisterPersonProfilePage(),
+        'register_pet': (BuildContext context) => RegisterPetPage(),
+        'register_business_profile': (BuildContext context) =>
+            RegisterBusinessProfile(),
+        'register_provider': (BuildContext context) => RegisterProviderPage(),
+        'home_person_profile': (BuildContext context) =>
+            HomePersonProfilePage(),
+        'detail_provider': (BuildContext context) => DetailProviderPage(),
+        'menu_navbar': (BuildContext context) => BottomNavBar(),
+        'register_cita': (BuildContext context) => RegisterCitaPage(),
+        'person_request_list': (BuildContext context) => PersonRequestPage(),
+        'detail_pet': (BuildContext context) => DetailPetPage(),
+        'home_business': (BuildContext context) => HomeBusinessPage(),
+        'home_business_nabvar': (BuildContext context) =>
+            MenuBusinessNavbarPage(),
       },
-      theme: ThemeData(
-        primaryColor: Color.fromRGBO(46, 177, 185, 1.0)
-      ),
-    )
-    );
+      theme: ThemeData(primaryColor: Color.fromRGBO(46, 177, 185, 1.0)),
+    ));
   }
 }
-
 
 /* void main() => runApp(MaterialApp(home: BottomNavBar()));
 

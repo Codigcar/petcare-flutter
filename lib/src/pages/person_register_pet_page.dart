@@ -1,16 +1,14 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petcare/constants.dart';
 import 'package:petcare/src/models/pet_model.dart';
 import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/storage/storage.dart';
 import 'package:petcare/src/utils/utils.dart' as utils;
 
-
 class RegisterPetPage extends StatefulWidget {
-
   @override
   _RegisterPetPageState createState() => _RegisterPetPageState();
 }
@@ -49,27 +47,26 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
           IconButton(icon: Icon(Icons.camera_alt), onPressed: _takePhoto),
         ],
       ),
-      body:  Form(
-        key: formKey,
-        child: ListView(
-          padding: EdgeInsets.symmetric( horizontal: 10.0, vertical:  20.0),
-          children: <Widget>[
-            _showPhoto(),
-            Divider(),
-            _inputName(),
-            Divider(),
-             _inputAge(),
-            Divider(),
-            _inputBreed(),
-            Divider(),
-            _inputPhoto(),
-            Divider(),
-            _inputSex(),
-            Divider(),
-            _createButton()
-          ],
-        )
-      ),
+      body: Form(
+          key: formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            children: <Widget>[
+              _showPhoto(),
+              Divider(),
+              _inputName(),
+              Divider(),
+              _inputAge(),
+              Divider(),
+              _inputBreed(),
+              Divider(),
+              /* _inputPhoto(), */
+              Divider(),
+              _inputSex(),
+              Divider(),
+              _createButton()
+            ],
+          )),
     );
   }
 
@@ -77,14 +74,13 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
     return TextFormField(
       initialValue: petModel.name,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Nombre',
-        hintText: 'Nombre',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Nombre',
+          hintText: 'Nombre',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)),
       validator: (value) {
-        if (value.length < 3 ){
+        if (value.length < 3) {
           return 'Nombre minimo a 3 caracteres';
         } else {
           return null;
@@ -96,77 +92,71 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
 
   Widget _inputAge() {
     return TextFormField(
-      initialValue: petModel.age.toString(),
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Edad',
-        hintText: 'Edad',
-        icon: Icon(Icons.data_usage),
-        suffixIcon: Icon(Icons.info)
-      ),
-      validator: (value) {
+        initialValue: petModel.age.toString(),
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+            labelText: 'Edad',
+            hintText: 'Edad',
+            icon: Icon(Icons.data_usage),
+            suffixIcon: Icon(Icons.info)),
+        validator: (value) {
           if (utils.isNumeric(value)) {
             return null;
           } else {
             return 'Solo números';
           }
         },
-        onSaved: (newValue) => petModel.age = int.parse(newValue)
-    );
+        onSaved: (newValue) => petModel.age = int.parse(newValue));
   }
 
   Widget _inputBreed() {
     return TextFormField(
       initialValue: petModel.breed,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Raza',
-        hintText: 'Raza',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Raza',
+          hintText: 'Raza',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)),
       onSaved: (newValue) => petModel.breed = newValue,
     );
   }
 
-  Widget _inputPhoto() {
+  /* Widget _inputPhoto() {
     return TextFormField(
       initialValue: petModel.photo,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Foto',
-        hintText: 'Foto',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Foto',
+          hintText: 'Foto',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)),
       onSaved: (newValue) => petModel.photo = newValue,
     );
-  }
+  }*/
 
   Widget _inputSex() {
     return TextFormField(
       initialValue: petModel.gender,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Sexo',
-        hintText: 'Sexo',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
-      onSaved: (newValue) => petModel.gender  = newValue,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Sexo',
+          hintText: 'Sexo',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)),
+      onSaved: (newValue) => petModel.gender = newValue,
     );
   }
 
   Widget _createButton() {
     return RaisedButton.icon(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Color.fromRGBO(46, 177, 185, 1.0),
-        textColor: Colors.white,
-        label: Text('Save'),
-        icon: Icon(Icons.save),
-        onPressed: () => _submit(),
-       
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      color: Color.fromRGBO(46, 177, 185, 1.0),
+      textColor: Colors.white,
+      label: Text('Guardar Datos'),
+      icon: Icon(Icons.save),
+      onPressed: () => _submit(),
     );
   }
 
@@ -179,10 +169,9 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
 
   } */
 
-  
   Widget _showPhoto() {
     if (petModel.photo != null) {
-     /*  return FadeInImage(
+      /*  return FadeInImage(
         placeholder: AssetImage('assets/jar-loading.gif'),
         image: NetworkImage(personProfileModel.photo),
         height: 300.0,
@@ -190,20 +179,45 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
       ); */
       return Container();
     } else {
-       return Container(
-         child: foto == null ? Text("vacio"): Image.file(foto),
-         height: 100,
-         width: 100,
-         padding: EdgeInsets.only(left:  10.0),
-
-       );
-       /* Image(
-
-        image: AssetImage( foto == null ? 'assets/no-image.png' : foto.path),
-        height: 300.0,
-        fit: BoxFit.cover,
-
-      ); */
+      return Container(
+        child: foto == null
+            ? Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colorPetCare,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: CircleAvatar(
+                    radius: 50,
+                  ),
+                ),
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colorPetCare,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: CircleAvatar(
+                    child: ClipOval(
+                      child: Container(
+                        width: 90,
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: Image.file(foto),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+        /* Image.file(foto) */
+        height: 100,
+        width: 100,
+        padding: EdgeInsets.only(left: 10.0),
+      );
     }
   }
 
@@ -226,12 +240,13 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
   }
 
   void _submit() async {
-    if( !formKey.currentState.validate() ) return;
+    if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
     if (foto != null) {
       petModel.photo = await petservice.uploadImage(foto);
       print(petModel.photo);
     }
-    petservice.registerPet(petModel, this.userId);    
+    petservice.registerPet(petModel, this.userId);
+    Navigator.pushReplacementNamed(context, 'menu_navbar');
   }
 }

@@ -11,17 +11,19 @@ class PersonProfileService {
   final String _url = 'http://10.0.2.2:8081/api';
   final _storage = new Storage();
 
-
   Future<bool> registerPersonProfile(PersonProfileModel personProfile) async {
     final url = '$_url/people';
-    Map<String, String> headers = {'Content-Type': 'application/json; charset=UTF-8'};
-    final resp = await http.post( url, headers: headers, body: personProfileModelToJson(personProfile));
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
+    final resp = await http.post(url,
+        headers: headers, body: personProfileModelToJson(personProfile));
     final decodedData = json.decode(resp.body);
-    print("id: "+decodedData['id'].toString());
+    print("id: " + decodedData['id'].toString());
     print(decodedData);
     _storage.userId = decodedData['id'];
     print(_storage.userId);
-    if( resp.statusCode == 200 ){
+    if (resp.statusCode == 200) {
       return true;
     } else {
       return false;
@@ -48,15 +50,15 @@ class PersonProfileService {
     return respData['secure_url'];
   }
 
-  Future<PersonProfileModel> getPersonProfileByEmail(String email) async{
-    final url = '$_url/people/email/'+email;
+  Future<PersonProfileModel> getPersonProfileByEmail(String email) async {
+    final url = '$_url/people/email/' + email;
     final resp = await http.get(url);
-    PersonProfileModel decodedData = PersonProfileModel.fromJson(json.decode(resp.body));
+    PersonProfileModel decodedData =
+        PersonProfileModel.fromJson(json.decode(resp.body));
     return decodedData;
-    
   }
 
- /* Future<List<ProductModel>> getAllProductsByProviderIdAndProductTypeId(int providerId, int productTypeId) async {
+  /* Future<List<ProductModel>> getAllProductsByProviderIdAndProductTypeId(int providerId, int productTypeId) async {
     final url = '$_url/business/0/providers/'+providerId.toString()+'/products-type/'+productTypeId.toString()+'/products';
     final resp = await http.get(url);
      List<ProductModel> decodedData = (json.decode(resp.body) as List)

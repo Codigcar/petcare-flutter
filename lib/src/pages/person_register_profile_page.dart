@@ -1,9 +1,8 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petcare/constants.dart';
 import 'package:petcare/src/models/person_profile_model.dart';
 import 'package:petcare/src/services/person_profile_service.dart';
 
@@ -13,7 +12,6 @@ class RegisterPersonProfilePage extends StatefulWidget {
 }
 
 class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
-
   PersonProfileModel personProfileModel = new PersonProfileModel();
   final personProfileService = new PersonProfileService();
   final formKey = GlobalKey<FormState>();
@@ -26,7 +24,7 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
   void initState() {
     super.initState();
 
-    if(personProfileModel.photo == null){
+    if (personProfileModel.photo == null) {
       print("está null personProfileModel.phtoo");
     }
     /* this.userId = _storage.userId; */
@@ -36,7 +34,7 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registrar perfil de la Persona' ),
+        title: Text('Datos Personales'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.photo_size_select_actual),
@@ -49,8 +47,11 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           children: <Widget>[
-            _showTwoInputs(),
-            
+            _showPhoto(),
+            Divider(),
+            Divider(),
+            _inputName(),
+            Divider(),
             _inputLastName(),
             Divider(),
             _inputPassword(),
@@ -65,20 +66,10 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
             Divider(),
             _createButton(),
             Divider(),
-            _buttonNextPet(context) 
+            /*  _buttonNextPet(context) */
           ],
         ),
       ),
-    );
-  }
-
-  Widget _showTwoInputs(){
-    return Row(
-      children: <Widget>[
-          _inputName(),      
-          _showPhoto()
-    
-      ],
     );
   }
 
@@ -87,13 +78,12 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
       child: TextFormField(
         initialValue: personProfileModel.name,
         decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-          labelText: 'Nombres y Apellidos',
-          icon: Icon(Icons.account_circle),
-          suffixIcon: Icon(Icons.accessibility)
-        ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+            labelText: 'Nombres',
+            icon: Icon(Icons.account_circle),
+            suffixIcon: Icon(Icons.accessibility)),
         validator: (value) {
-          if (value.length < 3 ){
+          if (value.length < 3) {
             return 'Nombre minimo a 3 caracteres';
           } else {
             return null;
@@ -109,13 +99,12 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
     return TextFormField(
       initialValue: personProfileModel.lastName,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Apellidos',
-        icon: Icon(Icons.account_circle),
-        suffixIcon: Icon(Icons.accessibility)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Apellidos',
+          icon: Icon(Icons.account_circle),
+          suffixIcon: Icon(Icons.accessibility)),
       validator: (value) {
-        if (value.length < 3 ){
+        if (value.length < 3) {
           return 'Nombre minimo a 3 caracteres';
         } else {
           return null;
@@ -130,16 +119,17 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
       initialValue: personProfileModel.password,
       obscureText: true,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Contraseña',
-        hintText: 'Contraseña',
-        icon: Icon(Icons.lock_open),
-        suffixIcon: Icon(Icons.lock)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Contraseña',
+          hintText: 'Contraseña',
+          icon: Icon(Icons.lock_open),
+          suffixIcon: Icon(Icons.lock)),
       validator: (value) {
         if (value.length < 4) {
           return 'Contraseña mínimo 4 caracteres';
-        } else { null; }
+        } else {
+          null;
+        }
       },
       onSaved: (newValue) => personProfileModel.password = newValue,
     );
@@ -149,11 +139,10 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
     return TextFormField(
       initialValue: personProfileModel.document,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'DNI',
-        icon: Icon(Icons.chrome_reader_mode),
-        suffixIcon: Icon(Icons.card_travel)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'DNI',
+          icon: Icon(Icons.chrome_reader_mode),
+          suffixIcon: Icon(Icons.card_travel)),
       onSaved: (newValue) => personProfileModel.document = newValue,
     );
   }
@@ -162,14 +151,12 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
     return TextFormField(
       initialValue: personProfileModel.email,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Email',
-        hintText: 'example@mail.com',
-        icon: Icon(Icons.alternate_email),
-        suffixIcon: Icon(Icons.email)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Email',
+          hintText: 'example@mail.com',
+          icon: Icon(Icons.alternate_email),
+          suffixIcon: Icon(Icons.email)),
       onSaved: (newValue) => personProfileModel.email = newValue,
-
     );
   }
 
@@ -177,12 +164,11 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
     return TextFormField(
       initialValue: personProfileModel.phone,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Telefono',
-        hintText: 'número telefonico',
-        icon: Icon(Icons.phone_android),
-        suffixIcon: Icon(Icons.phone)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Telefono',
+          hintText: 'número telefonico',
+          icon: Icon(Icons.phone_android),
+          suffixIcon: Icon(Icons.phone)),
       onSaved: (newValue) => personProfileModel.phone = newValue,
     );
   }
@@ -191,12 +177,11 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
     return TextFormField(
       initialValue: personProfileModel.age,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        labelText: 'Fecha de nacimiento',
-        hintText: 'Fecha de nacimiento',
-        icon: Icon(Icons.perm_contact_calendar),
-        suffixIcon: Icon(Icons.calendar_today)
-      ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Edad',
+          hintText: 'Edad',
+          icon: Icon(Icons.perm_contact_calendar),
+          suffixIcon: Icon(Icons.calendar_today)),
       onSaved: (newValue) => personProfileModel.age = newValue,
     );
   }
@@ -206,21 +191,21 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       color: Color.fromRGBO(46, 177, 185, 1.0),
       textColor: Colors.white,
-      label: Text('Save'),
+      label: Text('Guardar Datos'),
       icon: Icon(Icons.save),
       onPressed: () => _submit(),
-    
     );
   }
 
   void _submit() async {
-    if( !formKey.currentState.validate() ) return;
+    if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
     if (foto != null) {
       personProfileModel.photo = await personProfileService.uploadImage(foto);
       print(personProfileModel.photo);
     }
-    personProfileService.registerPersonProfile(personProfileModel);    
+    personProfileService.registerPersonProfile(personProfileModel);
+    Navigator.pushReplacementNamed(context, 'register_pet');
   }
 
   void showSnackbar(String message) {
@@ -234,15 +219,16 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
 
   Widget _buttonNextPet(BuildContext context) {
     return FloatingActionButton(
-      child: Icon( Icons.add ),
+      child: Icon(Icons.add),
       onPressed: () {
         Navigator.pushNamed(context, 'register_pet');
-    },);
+      },
+    );
   }
 
   Widget _showPhoto() {
     if (personProfileModel.photo != null) {
-     /*  return FadeInImage(
+      /*  return FadeInImage(
         placeholder: AssetImage('assets/jar-loading.gif'),
         image: NetworkImage(personProfileModel.photo),
         height: 300.0,
@@ -250,14 +236,62 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
       ); */
       return Container();
     } else {
-       return Container(
-         child: foto == null ? Text("vacio"): Image.file(foto),
-         height: 100,
-         width: 100,
-         padding: EdgeInsets.only(left:  10.0),
+      return Container(
+        child: foto == null
+            ? Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colorPetCare,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: CircleAvatar(
+                    radius: 50,
+                    /* child: ClipOval(
+                      child: Image.asset('assets/no-image.png'),
+                    ), */
+                  ),
+                ),
+              )
 
-       );
-       /* Image(
+            /*CircleAvatar(
+                radius: 50,
+
+                 child: ClipOval(
+                  child: Container(
+                    child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: Image.asset('assets/no-image.png'),
+                    ),
+                  ),
+                ), 
+              )*/
+            : Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colorPetCare,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: CircleAvatar(
+                    child: ClipOval(
+                      child: Container(
+                        width: 90,
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: Image.file(foto),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+        /* Image.file(foto) */
+        height: 100,
+        width: 100,
+        padding: EdgeInsets.only(left: 10.0),
+      );
+      /* Image(
 
         image: AssetImage( foto == null ? 'assets/no-image.png' : foto.path),
         height: 300.0,
@@ -266,8 +300,6 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
       ); */
     }
   }
-
-  
 
   _processImage(ImageSource origin) async {
     final fotonew = await ImagePicker.pickImage(source: origin);

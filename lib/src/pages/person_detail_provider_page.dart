@@ -14,7 +14,10 @@ class DetailProviderPage extends StatefulWidget {
 
 class _DetailProviderPageState extends State<DetailProviderPage> {
   final getProvider = new ProviderModel();
-  final titleStyle = TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(46, 177, 185, 1.0));
+  final titleStyle = TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.bold,
+      color: Color.fromRGBO(46, 177, 185, 1.0));
   final subtitleStyle = TextStyle(fontSize: 18.0, color: Colors.grey);
   final colorPetCare = Color.fromRGBO(46, 177, 185, 1.0);
   final productTypeService = new ProductTypeService();
@@ -23,10 +26,8 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
   final providerJoinProductTypeService = new ProviderJoinProductTypeService();
   final productService = new ProductService();
 
-  
   String _selectedOption = 'Servicios Generales';
-  int _selectedProductType = 1 ;
-
+  int _selectedProductType = 1;
 
   /* @override
   void initState() {
@@ -53,7 +54,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
             _actions(),
             _descriptionText(),
             _dropDown(getProvider),
-            _createListing(getProvider,_selectedProductType)
+            _createListing(getProvider, _selectedProductType)
           ],
         ),
       ),
@@ -64,115 +65,134 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     return Container(
       width: double.infinity,
       child: Image(
-           image: NetworkImage(provider.photo), width: double.infinity,
-           fit: BoxFit.cover,
-           height: 250.0,
+        image: NetworkImage(provider.photo),
+        width: double.infinity,
+        fit: BoxFit.cover,
+        height: 250.0,
       ),
     );
-    
   }
 
   Widget _titleAndSubtitleAndStar(ProviderModel provider) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
       decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(40.0),
-          topRight: const Radius.circular(40.0),
-        )
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(40.0),
+            topRight: const Radius.circular(40.0),
+          )),
       child: Row(
         children: <Widget>[
           _titleAndSubtitle(provider),
-          Icon( Icons.star, color: Color.fromRGBO(46, 177, 185, 1.0), size: 30.0,),
-          Text('7', style: TextStyle(fontSize: 20.0),)
+          Icon(
+            Icons.star,
+            color: Color.fromRGBO(46, 177, 185, 1.0),
+            size: 30.0,
+          ),
+          Text(
+            '7',
+            style: TextStyle(fontSize: 20.0),
+          )
         ],
       ),
     );
   }
 
-  Widget  _titleAndSubtitle(ProviderModel provider){
+  Widget _titleAndSubtitle(ProviderModel provider) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(provider.businessName, style: titleStyle),
-          SizedBox( height: 7.0 ),
+          SizedBox(height: 7.0),
           Text(provider.address, style: subtitleStyle),
         ],
       ),
     );
   }
 
-  Widget _actions(){
+  Widget _actions() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _action( Icons.call , 'Llamar'),
-        _action( Icons.near_me , 'Ruta'),
-        _action( Icons.share , 'Compartir'),
+        _action(Icons.call, 'Llamar'),
+        _action(Icons.near_me, 'Ruta'),
+        _action(Icons.share, 'Compartir'),
       ],
     );
   }
 
-  Widget _action( IconData icon, String name ){
+  Widget _action(IconData icon, String name) {
     return Column(
       children: <Widget>[
-        Icon( icon, color: Color.fromRGBO(46, 177, 185, 1.0), size: 40.0,),
+        Icon(
+          icon,
+          color: Color.fromRGBO(46, 177, 185, 1.0),
+          size: 40.0,
+        ),
         SizedBox(height: 5.0),
-        Text( name, style: TextStyle(fontSize: 15.0, color: Color.fromRGBO(46, 177, 185, 1.0)), ),
-        
+        Text(
+          name,
+          style: TextStyle(
+              fontSize: 15.0, color: Color.fromRGBO(46, 177, 185, 1.0)),
+        ),
       ],
     );
   }
 
-  Widget _descriptionText(){
+  Widget _descriptionText() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-      child: Text('Sunt adipisicing pariatur in ad qui qui proident aliquip ad eiusmod exercitation minim voluptate aute. Sunt aliquip quis fugiat id dolore dolor culpa exercitation nulla ut. Nostrud velit dolor dolore ullamco nulla dolor exercitation duis ullamco sit officia mollit est. Eiusmod do do ut veniam proident ad. Incididunt exercitation sit in est duis. Excepteur duis sint mollit eu incididunt.',
-      textAlign: TextAlign.justify,),
-      
-      );
+      child: Text(
+        'Sunt adipisicing pariatur in ad qui qui proident aliquip ad eiusmod exercitation minim voluptate aute. Sunt aliquip quis fugiat id dolore dolor culpa exercitation nulla ut. Nostrud velit dolor dolore ullamco nulla dolor exercitation duis ullamco sit officia mollit est. Eiusmod do do ut veniam proident ad. Incididunt exercitation sit in est duis. Excepteur duis sint mollit eu incididunt.',
+        textAlign: TextAlign.justify,
+      ),
+    );
   }
 
-  List<DropdownMenuItem<String>> getOptionsDropdown(List<ProductTypeModel> listproductsType) {
+  List<DropdownMenuItem<String>> getOptionsDropdown(
+      List<ProductTypeModel> listproductsType) {
     List<DropdownMenuItem<String>> list = new List();
     listproductsType.forEach((element) {
-      list.add(DropdownMenuItem(child: Text(element.name), value: element.name ,));
+      list.add(DropdownMenuItem(
+        child: Text(element.name),
+        value: element.name,
+      ));
     });
     return list;
   }
 
-  Widget _dropDown(ProviderModel provider){
+  Widget _dropDown(ProviderModel provider) {
     return FutureBuilder(
-      future: providerJoinProductTypeService.getProductTypeByProviderId(provider.id),
-      builder: (BuildContext context, AsyncSnapshot<List<ProductTypeModel>> snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){
+      future: providerJoinProductTypeService
+          .getProductTypeByProviderId(provider.id),
+      builder: (BuildContext context,
+          AsyncSnapshot<List<ProductTypeModel>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
-        }
-        else {
+        } else {
           productsType = snapshot.data;
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 35.0,vertical: 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 0.0),
             child: Row(
               children: <Widget>[
                 Icon(Icons.select_all),
                 DropdownButton(
                   value: _selectedOption,
-                  items: getOptionsDropdown( productsType),
+                  items: getOptionsDropdown(productsType),
                   onChanged: (value) {
                     setState(() {
                       _selectedOption = value;
                       for (var i = 0; i < snapshot.data.length; i++) {
-                        if(snapshot.data[i].name == _selectedOption){
-                          print( snapshot.data[i].id);
-                          _selectedProductType= snapshot.data[i].id;
+                        if (snapshot.data[i].name == _selectedOption) {
+                          print(snapshot.data[i].id);
+                          _selectedProductType = snapshot.data[i].id;
                         }
                       }
-                    
                     });
-                  },)
+                  },
+                )
               ],
             ),
           );
@@ -181,7 +201,8 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     );
   }
 
-  Widget _item( BuildContext context,ProductModel product, ProviderModel provider){
+  Widget _item(
+      BuildContext context, ProductModel product, ProviderModel provider) {
     return Container(
       margin: EdgeInsets.only(top: 20.0),
       height: 180,
@@ -189,54 +210,56 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: 
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    image: DecorationImage(
-                      image: NetworkImage(/* product.photo */ 'assets/no-image.png'),
-                      fit: BoxFit.cover,
-                    ),
-                    ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                image: DecorationImage(
+                  image:
+                      NetworkImage(/* product.photo */ 'assets/no-image.png'),
+                  fit: BoxFit.cover,
                 ),
+              ),
+            ),
           ),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.only(top: 10.0,bottom: 10.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+              child: Container(
+            margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0)
-                ),
-                color: colorPetCare,
-              ),
-              child: Column(
-                children: <Widget>[/* 
+                  bottomRight: Radius.circular(20.0)),
+              color: colorPetCare,
+            ),
+            child: Column(
+              children: <Widget>[
+                /* 
                   Text(product.businessName),
                   Text(product.description), */
-                  Expanded(
-                    child: ListTile(
-                      title: Text(product.name),
-                      subtitle: Text(product.description),
-                    ),
+                Expanded(
+                  child: ListTile(
+                    title: Text(product.name),
+                    subtitle: Text(product.description),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: RaisedButton(
-                      child: Container(
-                        child: Text('Solicitar Cita'),
-                      ),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-                      textColor: Colors.white,
-                      color: Colors.red,
-                      onPressed: () {
-                       /*  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterCitaPage())); */
-                        Navigator.pushNamed(context, 'register_cita' , arguments: [provider,product]);
-                      },),
-                  )
-                ],
-              ),
-              
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RaisedButton(
+                    child: Container(
+                      child: Text('Solicitar Cita'),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0)),
+                    textColor: Colors.white,
+                    color: Colors.red,
+                    onPressed: () {
+                      /*  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterCitaPage())); */
+                      Navigator.pushNamed(context, 'register_cita',
+                          arguments: [provider, product]);
+                    },
+                  ),
+                )
+              ],
+            ),
           ))
         ],
       ),
@@ -245,9 +268,10 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
 
   Widget _createListing(ProviderModel provider, int _selectedProductType) {
     return FutureBuilder(
-        future: productService.getAllProductsByProviderIdAndProductTypeId(provider.id, _selectedProductType),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<ProductModel>> snapshot) {
+        future: productService.getAllProductsByProviderIdAndProductTypeId(
+            provider.id, _selectedProductType),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<ProductModel>> snapshot) {
           if (snapshot.hasData) {
             final products = snapshot.data;
             return ListView.builder(
@@ -259,7 +283,6 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
           } else {
             return Center(child: CircularProgressIndicator());
           }
-          
         });
   }
 }

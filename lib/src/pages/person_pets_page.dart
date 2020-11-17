@@ -2,48 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/models/pet_model.dart';
 
-
 class PetsPage extends StatelessWidget {
-
   final petService = new PetService();
   final colorPetCare = Color.fromRGBO(46, 177, 185, 1.0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text('Mis Mascotas')),
       body: Column(
-        children: [
-          _createList()
-        ],
+        children: [_createList()],
       ),
     );
   }
 
-  Widget _createList(){
+  Widget _createList() {
     return FutureBuilder(
         future: petService.getAllPetsByPersonId(1),
-        builder: (BuildContext context,
-        AsyncSnapshot<List<PetModel>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<PetModel>> snapshot) {
           if (snapshot.hasData) {
             final getPets = snapshot.data;
             print(getPets.length);
             return Expanded(
                 child: GridView.builder(
-                 /*  padding: EdgeInsets.only(left: 20.0, top: 30.0), */
-                  itemCount: getPets.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.90), 
-                  itemBuilder: (context, index) => _createItem(context,getPets[index]),
-                ) 
-              );
+              /*  padding: EdgeInsets.only(left: 20.0, top: 30.0), */
+              itemCount: getPets.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 0.90),
+              itemBuilder: (context, index) =>
+                  _createItem(context, getPets[index]),
+            ));
           } else {
             return Center(child: CircularProgressIndicator());
           }
-        }
-    );
+        });
   }
 
-  Widget _createItem(BuildContext context, PetModel pet){
+  Widget _createItem(BuildContext context, PetModel pet) {
     /* return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -69,23 +65,23 @@ class PetsPage extends StatelessWidget {
       ],
     ); */
 
-    final card =   Container(
-          child:FadeInImage(
-            placeholder: AssetImage('assets/jar-loading.gif'),
-            image: NetworkImage(pet.photo),
-            fadeInDuration: Duration(milliseconds: 200),
-            fit: BoxFit.cover,
-          ), 
+    final card = Container(
+      child: FadeInImage(
+        placeholder: AssetImage('assets/jar-loading.gif'),
+        image: NetworkImage(
+            'https://res.cloudinary.com/dggqauzyy/image/upload/v1605497482/onl9c1ln7chphrupndqm.jpg'),
+        fadeInDuration: Duration(milliseconds: 200),
+        fit: BoxFit.cover,
+      ),
     );
 
     return Material(
       child: InkWell(
-        onTap: () =>Navigator.pushNamed(context, 'detail_pet', arguments: pet),
+        onTap: () => Navigator.pushNamed(context, 'detail_pet', arguments: pet),
         borderRadius: BorderRadius.circular(30.0),
         child: Container(
           margin: EdgeInsets.all(10.0),
           padding: EdgeInsets.all(5.0),
-          
           decoration: BoxDecoration(
               color: colorPetCare,
               borderRadius: BorderRadius.circular(30.0),
@@ -96,7 +92,7 @@ class PetsPage extends StatelessWidget {
                     spreadRadius: 2.0,
                     offset: Offset(2.0, 10.0))
               ]),
-          child:  ClipRRect(
+          child: ClipRRect(
             borderRadius: BorderRadius.circular(30.0),
             child: card,
           ),
@@ -105,4 +101,3 @@ class PetsPage extends StatelessWidget {
     );
   }
 }
-

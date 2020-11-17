@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:petcare/constants.dart';
 import 'package:petcare/src/bloc/login_bloc.dart';
 import 'package:petcare/src/bloc/provider.dart';
 import 'package:petcare/src/services/account_service.dart';
@@ -144,10 +145,23 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-          FlatButton(
-              child: Text('Registrate'),
-              onPressed: () =>
-                  Navigator.pushReplacementNamed(context, 'register')),
+          Text('¿No tienes cuenta? Registrate!!'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FlatButton(
+                child:
+                    Text('Veterinario', style: TextStyle(color: colorPetCare)),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, 'register'),
+              ),
+              FlatButton(
+                child: Text('PetLover'),
+                onPressed: () => Navigator.pushReplacementNamed(
+                    context, 'register_person_profile'),
+              ),
+            ],
+          ),
           SizedBox(height: 100.0),
         ],
       ),
@@ -208,7 +222,6 @@ class LoginPage extends StatelessWidget {
             ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25.0)),
-            /* elevation: 0.0, */
             color: Color.fromRGBO(46, 177, 185, 1.0),
             textColor: Colors.white,
             onPressed: snapshot.hasData
