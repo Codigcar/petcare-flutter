@@ -12,7 +12,11 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: _requestList()));
+    return Scaffold(
+      body: SafeArea(
+        child: _requestList(),
+      ),
+    );
   }
 
   Widget _requestList() {
@@ -41,14 +45,12 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         color: Colors.white,
-        /* Color.fromRGBO(253, 67, 27, 0.9), */
         child: Column(
           children: <Widget>[
             Row(
               children: [
                 Expanded(
                   child: Container(
-                    /* color: Colors.black, */
                     child: ListTile(
                       leading: Container(
                         child: ClipRRect(
@@ -60,12 +62,9 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                      )
-                      /* Icon(Icons.photo, color: Colors.blue) */,
-                      title: Text(request
-                          .veterinaryName /* , style: TextStyle(color: Colors.white) */),
-                      subtitle: Text(request
-                          .petName /* , style: TextStyle(color: Colors.white54) */),
+                      ),
+                      title: Text(request.veterinaryName),
+                      subtitle: Text(request.petName),
                     ),
                   ),
                 ),
@@ -87,32 +86,38 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
                 if (request.status == 1)
                   Expanded(
                     child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Container(
-                            child: Expanded(
-                                child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(30.0)),
-                          padding: EdgeInsets.symmetric(vertical: 30.0),
-                          child: Text('data',
-                              style: TextStyle(color: Colors.green)),
-                        )))),
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        child: Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(30.0)),
+                            padding: EdgeInsets.symmetric(vertical: 30.0),
+                            child: Text('data',
+                                style: TextStyle(color: Colors.green)),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 if (request.status == 2)
                   Expanded(
                     child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Container(
-                            child: Expanded(
-                                child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(30.0)),
-                          padding: EdgeInsets.symmetric(vertical: 30.0),
-                          child:
-                              Text('data', style: TextStyle(color: Colors.red)),
-                        )))),
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        child: Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(30.0)),
+                            padding: EdgeInsets.symmetric(vertical: 30.0),
+                            child: Text('data',
+                                style: TextStyle(color: Colors.red)),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
               ],
             ),

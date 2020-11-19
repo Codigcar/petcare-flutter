@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/constants.dart';
 import 'package:petcare/src/models/product_model.dart';
 import 'package:petcare/src/models/product_type_model.dart';
 import 'package:petcare/src/models/provider_model.dart';
+import 'package:petcare/src/pages/person_register_cita_page.dart';
 import 'package:petcare/src/services/product_service.dart';
 import 'package:petcare/src/services/product_type_service.dart';
 import 'package:petcare/src/services/provider_join_product_type_service.dart';
@@ -77,11 +79,12 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(40.0),
-            topRight: const Radius.circular(40.0),
-          )),
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(40.0),
+          topRight: const Radius.circular(40.0),
+        ),
+      ),
       child: Row(
         children: <Widget>[
           _titleAndSubtitle(provider),
@@ -179,6 +182,13 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
               children: <Widget>[
                 Icon(Icons.select_all),
                 DropdownButton(
+                  style: TextStyle(color: colorPetCare, fontSize: 18.0),
+                  elevation: 20,
+                  icon: Icon(Icons.arrow_downward),
+                  underline: Container(
+                    height: 2,
+                    color: colorPetCare2,
+                  ),
                   value: _selectedOption,
                   items: getOptionsDropdown(productsType),
                   onChanged: (value) {
@@ -210,57 +220,103 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                image: DecorationImage(
-                  image:
-                      NetworkImage(/* product.photo */ 'assets/no-image.png'),
-                  fit: BoxFit.cover,
+            child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: colorPetCare,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Image(
+                        image: NetworkImage(product.photo),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
           Expanded(
-              child: Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
+            child: Container(
+              margin: EdgeInsets.only(top: 22.0, bottom: 20.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0)),
-              color: colorPetCare,
-            ),
-            child: Column(
-              children: <Widget>[
-                /* 
-                  Text(product.businessName),
-                  Text(product.description), */
-                Expanded(
-                  child: ListTile(
-                    title: Text(product.name),
-                    subtitle: Text(product.description),
-                  ),
+                  bottomRight: Radius.circular(20.0),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: RaisedButton(
-                    child: Container(
-                      child: Text('Solicitar Cita'),
+                color: colorPetCare,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: ListTile(
+                      title: Text(
+                        product.name,
+                        style: TextStyle(
+                            color: colorPetCare2,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0),
+                      ),
+                      subtitle: Text(
+                        product.description,
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0)),
-                    textColor: Colors.white,
-                    color: Colors.red,
-                    onPressed: () {
-                      /*  Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterCitaPage())); */
-                      Navigator.pushNamed(context, 'register_cita',
-                          arguments: [provider, product]);
-                    },
                   ),
-                )
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          /* Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterCitaPage()),
+                          ); */
+                          Navigator.pushNamed(context, 'register_cita',
+                              arguments: [provider, product]);
+                        },
+                        child: Text(
+                          'Solicitar Cita',
+                          style: TextStyle(color: colorPetCare, fontSize: 18.0),
+                        ),
+                      ),
+                    ),
+                  )
+                  /* Align(
+                    alignment: Alignment.bottomCenter,
+                    child: RaisedButton(
+                      child: Container(
+                        child: Text('Solicitar Cita'),
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0)),
+                      textColor: Colors.white,
+                      color: Colors.red,
+                      onPressed: () {
+                        /* Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterCitaPage())); */
+                        Navigator.pushNamed(context, 'register_cita',
+                            arguments: [provider, product]);
+                      },
+                    ),
+                  ) */
+                ],
+              ),
             ),
-          ))
+          )
         ],
       ),
     );

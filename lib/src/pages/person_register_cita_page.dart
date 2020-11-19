@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:petcare/src/models/person_request_model.dart';
 import 'package:petcare/src/models/pet_model.dart';
 import 'package:petcare/src/models/product_model.dart';
 import 'package:petcare/src/models/provider_model.dart';
+import 'package:petcare/src/services/person_request_service.dart';
 import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/storage/storage.dart';
 import 'package:petcare/src/utils/utils.dart' as utils;
@@ -21,6 +23,10 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
   final _storage = new Storage();
   String _selectedOption = 'negrote';
 
+  /* final personRequestModel = new PersonRequestModel(); */
+
+  final requestService = new RequestService();
+
   @override
   void initState() {
     super.initState();
@@ -29,7 +35,6 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
 
   @override
   Widget build(BuildContext context) {
-    /* _loadPetSelection(); */
     final List<Object> objectList = ModalRoute.of(context).settings.arguments;
     final ProviderModel getProvider = objectList[0];
     final ProductModel getProduct = objectList[1];
@@ -38,24 +43,26 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
       body: Stack(
         children: [
           Positioned.fill(
-              child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg'),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                      /*  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg'),
 
-                          /* AssetImage(
+                        /* AssetImage(
                             'assets/jar-loading.gif') /* NetworkImage('assets/no-image.png') */,
                          */ /* 'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg' */
-                          fit: BoxFit.cover)),
+                        fit: BoxFit.cover),
+                  ), */
+                      ),
                 ),
-              ),
-              Expanded(child: Container(color: colorPetCare))
-            ],
-          )),
+                Expanded(child: Container(color: colorPetCare))
+              ],
+            ),
+          ),
           SafeArea(
             child: Align(
               alignment: Alignment.center,
@@ -87,7 +94,8 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
                       Row(
                         children: <Widget>[
                           Expanded(child: _buttonCancel()),
-                          Expanded(child: _buttonRequest()),
+                          Expanded(
+                              child: _buttonRequest(getProvider, getProduct)),
                         ],
                       )
                     ],
@@ -138,6 +146,11 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
                   onChanged: (value) {
                     setState(() {
                       _selectedOption = value;
+                      /*  for (var i = 0; i < snapshot.data.length; i++) {
+                        if (snapshot.data[i].name == _selectedOption) {
+                          _selectedPet = snapshot.data[i].id;
+                        }
+                      } */
                     });
                   },
                 )
@@ -146,28 +159,6 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
           );
         }
       },
-    );
-  }
-
-  Widget _buttonRequest() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0),
-      child: RaisedButton(
-        elevation: 10.0,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: colorPetCare,
-        textColor: Colors.white,
-        child: Text('Aceptar'),
-        onPressed: () {},
-      ),
-      /* child: FloatingActionButton.extended(
-        onPressed: () {}, 
-        icon: Icon(Icons.check_circle,),
-        backgroundColor: colorPetCare,
-        elevation: 8.0,
-        label: Text('Solicitar', style: TextStyle( color: Colors.white),) 
-      ) */
     );
   }
 
@@ -183,13 +174,6 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
         child: Text('Cancelar'),
         onPressed: () {},
       ),
-      /* child: FloatingActionButton.extended(
-        onPressed: () {}, 
-        icon: Icon(Icons.cancel, color: colorPetCare,),
-        backgroundColor: Colors.white,
-        elevation: 10.0,
-        label: Text('Cancelar', style: TextStyle( color: colorPetCare),) 
-      ) */
     );
   }
 
@@ -238,11 +222,12 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
       enableInteractiveSelection: false,
       controller: _inputFieldDateController,
       decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          hintText: 'Fecha de nacimiento',
-          labelText: 'Fecha de nacimiento',
-          suffixIcon: Icon(Icons.perm_contact_calendar),
-          icon: Icon(Icons.calendar_today)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+        hintText: 'Fecha',
+        labelText: 'Fecha',
+        suffixIcon: Icon(Icons.perm_contact_calendar),
+        icon: Icon(Icons.calendar_today),
+      ),
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
         _selectDate(context);
@@ -260,17 +245,19 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
 
   void _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: new DateTime.now(),
-        firstDate: new DateTime.now(),
-        lastDate: new DateTime(2024),
-        locale: Locale('es', 'ES'));
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime.now(),
+      lastDate: new DateTime(2024),
+      locale: Locale('es', 'ES'),
+    );
 
     if (picked != null) {
       setState(() {
         _date = picked.toString();
         _date = convertDateTimeDisplay(_date);
         _inputFieldDateController.text = _date;
+        /* personRequestModel.dateReservation = _date; */
       });
     }
   }
@@ -280,8 +267,8 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-            labelText: 'Hora inicio',
-            hintText: 'Hora inicio',
+            labelText: 'Hora',
+            hintText: 'Hora',
             icon: Icon(Icons.data_usage),
             suffixIcon: Icon(Icons.info)),
         validator: (value) {
@@ -291,7 +278,35 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
             return 'Solo números';
           }
         },
-        onSaved: (newValue) {} /* petModel.age = int.parse(newValue) */
-        );
+        onSaved: (newValue) {
+          /* personRequestModel.startTime = newValue;
+          personRequestModel.endTime = '00:00'; */
+        });
+  }
+
+  _buttonRequest(ProviderModel getProvider, ProductModel getProduct) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
+      child: RaisedButton(
+        elevation: 10.0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        color: colorPetCare,
+        textColor: Colors.white,
+        child: Text('Aceptar'),
+        onPressed: () {
+          // personRequestModel.status = 0;
+
+          requestService.registerRequest();
+          /*  personRequestModel2,
+              1,
+              1 /* _selectedPet */,
+              1 /* getProvider .id*/,
+              1,
+              /* getProduct.id */
+              1 */
+        },
+      ),
+    );
   }
 }

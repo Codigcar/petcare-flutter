@@ -18,25 +18,25 @@ class PetsPage extends StatelessWidget {
 
   Widget _createList() {
     return FutureBuilder(
-        future: petService.getAllPetsByPersonId(1),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<PetModel>> snapshot) {
-          if (snapshot.hasData) {
-            final getPets = snapshot.data;
-            print(getPets.length);
-            return Expanded(
-                child: GridView.builder(
-              /*  padding: EdgeInsets.only(left: 20.0, top: 30.0), */
-              itemCount: getPets.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 0.90),
-              itemBuilder: (context, index) =>
-                  _createItem(context, getPets[index]),
-            ));
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        });
+      future: petService.getAllPetsByPersonId(1),
+      builder: (BuildContext context, AsyncSnapshot<List<PetModel>> snapshot) {
+        if (snapshot.hasData) {
+          final getPets = snapshot.data;
+          print(getPets.length);
+          return Expanded(
+              child: GridView.builder(
+            /*  padding: EdgeInsets.only(left: 20.0, top: 30.0), */
+            itemCount: getPets.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 0.90),
+            itemBuilder: (context, index) =>
+                _createItem(context, getPets[index]),
+          ));
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget _createItem(BuildContext context, PetModel pet) {
