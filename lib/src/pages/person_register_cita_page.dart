@@ -23,9 +23,10 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
   final _storage = new Storage();
   String _selectedOption = 'negrote';
 
-  /* final personRequestModel = new PersonRequestModel(); */
-
+  PersonRequestModel personRequestModel = new PersonRequestModel();
   final requestService = new RequestService();
+  int _selectedPet = 1;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -75,32 +76,35 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0)),
                 child: Form(
+                    key: formKey,
                     child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text('RESGISTRAR CITA', style: TextStyle(fontSize: 20.0)),
-                      SizedBox(height: 60.0),
-                      _categoryName(getProvider),
-                      SizedBox(height: 30.0),
-                      _serviceName(getProduct),
-                      SizedBox(height: 30.0),
-                      _createDate(context),
-                      SizedBox(height: 30.0),
-                      _startTime(),
-                      SizedBox(height: 30.0),
-                      _dropDown(),
-                      SizedBox(height: 80.0),
-                      Row(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
                         children: <Widget>[
-                          Expanded(child: _buttonCancel()),
-                          Expanded(
-                              child: _buttonRequest(getProvider, getProduct)),
+                          Text('RESGISTRAR CITA',
+                              style: TextStyle(fontSize: 20.0)),
+                          SizedBox(height: 60.0),
+                          _categoryName(getProvider),
+                          SizedBox(height: 30.0),
+                          _serviceName(getProduct),
+                          SizedBox(height: 30.0),
+                          _createDate(context),
+                          SizedBox(height: 30.0),
+                          _startTime(),
+                          SizedBox(height: 30.0),
+                          _dropDown(),
+                          SizedBox(height: 80.0),
+                          Row(
+                            children: <Widget>[
+                              Expanded(child: _buttonCancel()),
+                              Expanded(
+                                  child:
+                                      _buttonRequest(getProvider, getProduct)),
+                            ],
+                          )
                         ],
-                      )
-                    ],
-                  ),
-                )),
+                      ),
+                    )),
               ),
             ),
           ),
@@ -146,11 +150,11 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
                   onChanged: (value) {
                     setState(() {
                       _selectedOption = value;
-                      /*  for (var i = 0; i < snapshot.data.length; i++) {
+                      for (var i = 0; i < snapshot.data.length; i++) {
                         if (snapshot.data[i].name == _selectedOption) {
                           _selectedPet = snapshot.data[i].id;
                         }
-                      } */
+                      }
                     });
                   },
                 )
@@ -213,7 +217,7 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
           return null;
         }
       },
-      onSaved: (newValue) => /* petModel.name = newValue */ {},
+      onSaved: (newValue) => {},
     );
   }
 
@@ -257,31 +261,29 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
         _date = picked.toString();
         _date = convertDateTimeDisplay(_date);
         _inputFieldDateController.text = _date;
-        /* personRequestModel.dateReservation = _date; */
+        personRequestModel.dateReservation = _date;
       });
     }
   }
 
   Widget _startTime() {
     return TextFormField(
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
-        decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-            labelText: 'Hora',
-            hintText: 'Hora',
-            icon: Icon(Icons.data_usage),
-            suffixIcon: Icon(Icons.info)),
-        validator: (value) {
-          if (utils.isNumeric(value)) {
-            return null;
-          } else {
-            return 'Solo números';
-          }
-        },
-        onSaved: (newValue) {
-          /* personRequestModel.startTime = newValue;
-          personRequestModel.endTime = '00:00'; */
-        });
+      initialValue: personRequestModel.startTime,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          labelText: 'Hora',
+          hintText: 'Hora',
+          icon: Icon(Icons.data_usage),
+          suffixIcon: Icon(Icons.info)),
+      /* validator: (value) {
+        if (utils.isNumeric(value)) {
+          return null;
+        } else {
+          return 'Solo números';
+        }
+      }, */
+      onSaved: (newValue) => personRequestModel.startTime = newValue,
+    );
   }
 
   _buttonRequest(ProviderModel getProvider, ProductModel getProduct) {
@@ -295,16 +297,13 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
         textColor: Colors.white,
         child: Text('Aceptar'),
         onPressed: () {
-          // personRequestModel.status = 0;
+          personRequestModel.status = 0;
+          personRequestModel.startTime = "2:00";
 
-          requestService.registerRequest();
-          /*  personRequestModel2,
-              1,
-              1 /* _selectedPet */,
-              1 /* getProvider .id*/,
-              1,
-              /* getProduct.id */
-              1 */
+          if (!formKey.currentState.validate()) return;
+          formKey.currentState.save();
+          requestService.registerRequest(personRequestModel, 1, _selectedPet,
+              getProvider.id, 1, getProduct.id);
         },
       ),
     );

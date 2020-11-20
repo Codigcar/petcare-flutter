@@ -11,6 +11,13 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
   final requestService = new RequestService();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -38,91 +45,74 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
   }
 
   Widget _requestCard(BuildContext context, RequestModel request) {
-    return Container(
-      padding: EdgeInsets.all(5.0),
-      child: Card(
-        elevation: 5.0,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    child: ListTile(
-                      leading: Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: FadeInImage(
-                            placeholder: AssetImage('assets/jar-loading.gif'),
-                            image: NetworkImage(request.petPhoto),
-                            fadeInDuration: Duration(milliseconds: 200),
-                            fit: BoxFit.cover,
-                          ),
+    if (request.status == 0) {
+      return Container(
+          padding: EdgeInsets.all(5.0),
+          child: _itemCard(request, Colors.yellowAccent));
+    }
+    if (request.status == 1) {
+      return Container(
+          padding: EdgeInsets.all(5.0),
+          child: _itemCard(request, Colors.greenAccent));
+    }
+    if (request.status == 2) {
+      return Container(
+          padding: EdgeInsets.all(5.0),
+          child: _itemCard(request, Colors.redAccent));
+    }
+  }
+
+  _itemCard(RequestModel request, Color color) {
+    return Card(
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      color: color,
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  child: ListTile(
+                    leading: Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: FadeInImage(
+                          placeholder: AssetImage('assets/jar-loading.gif'),
+                          image: NetworkImage(request.petPhoto),
+                          fadeInDuration: Duration(milliseconds: 200),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      title: Text(request.veterinaryName),
-                      subtitle: Text(request.petName),
+                    ),
+                    subtitle: Column(
+                      children: [
+                        Text(''),
+                        Text(request.veterinaryName),
+                        Text(request.productName),
+                        Text(''),
+                      ],
                     ),
                   ),
                 ),
-                if (request.status == 0)
-                  Expanded(
-                    child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Container(
-                            child: Expanded(
-                                child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.yellowAccent,
-                              borderRadius: BorderRadius.circular(30.0)),
-                          padding: EdgeInsets.symmetric(vertical: 30.0),
-                          child: Text('data',
-                              style: TextStyle(color: Colors.yellowAccent)),
-                        )))),
-                  ),
-                if (request.status == 1)
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        child: Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(30.0)),
-                            padding: EdgeInsets.symmetric(vertical: 30.0),
-                            child: Text('data',
-                                style: TextStyle(color: Colors.green)),
-                          ),
-                        ),
-                      ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  child: ListTile(
+                    subtitle: Column(
+                      children: [
+                        Text(request.dateReservation),
+                        Text(request.startTime),
+                      ],
                     ),
                   ),
-                if (request.status == 2)
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        child: Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(30.0)),
-                            padding: EdgeInsets.symmetric(vertical: 30.0),
-                            child: Text('data',
-                                style: TextStyle(color: Colors.red)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ],
-        ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

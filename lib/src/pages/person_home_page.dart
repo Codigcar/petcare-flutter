@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/constants.dart';
 import 'package:petcare/src/models/provider_model.dart';
 import 'package:petcare/src/services/provider_service.dart';
 
@@ -13,10 +14,62 @@ class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        body: SafeArea(
-          child: _createListing()
-        ),
+    return Scaffold(
+      /* appBar: AppBar(
+        title: Text('data'),
+      ), */
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: colorPetCare,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(36),
+                      bottomRight: Radius.circular(36),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 30,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 54,
+                    margin: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+                    padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: colorPetCare)
+                      ],
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: "Buscar",
+                          hintStyle: TextStyle(color: colorPetCare),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: _createListing(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -38,38 +91,29 @@ class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
   }
 
   Widget _createItem(ProviderModel product, BuildContext context) {
-    return Dismissible(
-        key: UniqueKey(),
-        background: Container(
-          color: Colors.red,
+    return Padding(
+      padding: const EdgeInsets.all(14.0),
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            (product.photo == null)
+                ? Image(image: AssetImage('assets/no-image.png'))
+                : FadeInImage(
+                    placeholder: AssetImage('assets/jar-loading.gif'),
+                    image: NetworkImage(product.photo),
+                    height: 300.0,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+            ListTile(
+              title: Text(product.businessName),
+              subtitle: Text(product.address),
+              onTap: () => Navigator.pushNamed(context, 'detail_provider',
+                  arguments: product),
+            ),
+          ],
         ),
-        onDismissed: (direccion) {
-          /*   businessProfileService.deleteProduct(product.id); */
-        },
-        child: Card(
-          child: Column(
-            children: <Widget>[
-              (product.photo == null)
-                  ? Image(image: AssetImage('assets/no-image.png'))
-                  : FadeInImage(
-                      placeholder: AssetImage('assets/jar-loading.gif'),
-                      image: NetworkImage( product.photo ),
-                      height: 300.0,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-              ListTile(
-                title: Text(product.businessName),
-                subtitle: Text(product.address),
-                onTap: () =>
-                    Navigator.pushNamed(context, 'detail_provider', arguments: product),
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }
-
-/*  businessProfileService.getAllBusiness()
-      .then((value) => businessProfiles = value);
-      print(businessProfiles); */

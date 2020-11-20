@@ -148,23 +148,8 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
     );
   }
 
-  /* void _submit() async {
-    if( !formKey.currentState.validate() ) return;
-    formKey.currentState.save();
-
-    print('Todo ok!');
-    petservice.registerPet(petModel, userId );
-
-  } */
-
   Widget _showPhoto() {
     if (petModel.photo != null) {
-      /*  return FadeInImage(
-        placeholder: AssetImage('assets/jar-loading.gif'),
-        image: NetworkImage(personProfileModel.photo),
-        height: 300.0,
-        fit: BoxFit.contain,
-      ); */
       return Container();
     } else {
       return Container(

@@ -7,13 +7,11 @@ import 'package:petcare/src/models/request_model.dart';
 class RequestService {
   final String _url = 'http://10.0.2.2:8081/api';
 
-  Future<bool> registerRequest(
-      /* PersonRequestModel personRequest, int peopleId,
-      int petId, int providerId, int productTypeId, int productId */
-      ) async {
-    final PersonRequestModel personRequest = new PersonRequestModel();
+  Future<bool> registerRequest(PersonRequestModel personRequest, int peopleId,
+      int petId, int providerId, int productTypeId, int productId) async {
+    //final PersonRequestModel personRequest = new PersonRequestModel();
 
-    /* final url = '$_url/people/' +
+    final url = '$_url/people/' +
         peopleId.toString() +
         '/pets/' +
         petId.toString() +
@@ -23,13 +21,13 @@ class RequestService {
         productTypeId.toString() +
         '/products/' +
         productId.toString() +
-        '/requests'; */
-    personRequest.dateReservation = "2020-02-03";
+        '/requests';
+    /* personRequest.dateReservation = "2020-02-03";
     personRequest.startTime = "1:00";
     personRequest.endTime = "1:00";
-    personRequest.status = 0;
-    final url =
-        '$_url/people/1/pets/1/providers/1/productType/1/products/1/requests';
+    personRequest.status = 0; */
+    /* final url =
+        '$_url/people/1/pets/1/providers/1/productType/1/products/1/requests'; */
 
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8'

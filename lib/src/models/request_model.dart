@@ -1,58 +1,53 @@
 import 'dart:convert';
 
-RequestModel requestModelFromJson(String str) => RequestModel.fromJson(json.decode(str));
+RequestModel requestModelFromJson(String str) =>
+    RequestModel.fromJson(json.decode(str));
 
 String requestModelToJson(RequestModel data) => json.encode(data.toJson());
 
 class RequestModel {
-    RequestModel({
-        this.id,
-        this.dateReservation,
-        this.startTime,
-        this.endTime,
-        this.veterinaryName,
-        this.productTypeName,
-        this.productName,
-        this.petName,
-        this.status,
-        this.personName,
-        this.personPhone,
-        this.petPhoto
-    });
+  RequestModel(
+      {this.id,
+      this.dateReservation,
+      this.startTime,
+      this.veterinaryName,
+      this.productTypeName,
+      this.productName,
+      this.petName,
+      this.status,
+      this.personName,
+      this.personPhone,
+      this.petPhoto});
 
-    int id;
-    DateTime dateReservation;
-    String startTime;
-    String endTime;
-    String veterinaryName;
-    String productTypeName;
-    String productName;
-    String petName;
-    int status;
-    String personName;
-    String personPhone;
-    String petPhoto;
+  int id;
+  String dateReservation;
+  String startTime;
+  String veterinaryName;
+  String productTypeName;
+  String productName;
+  String petName;
+  int status;
+  String personName;
+  String personPhone;
+  String petPhoto;
 
-    factory RequestModel.fromJson(Map<String, dynamic> json) => RequestModel(
-        id: json["id"],
-        dateReservation: DateTime.parse(json["dateReservation"]),
-        startTime: json["startTime"],
-        endTime: json["endTime"],
-        veterinaryName: json["veterinaryName"],
-        productTypeName: json["productTypeName"],
-        productName: json["productName"],
-        petName: json["petName"],
-        status: json["status"],
-        personName: json["personName"],
-        personPhone: json["personPhone"],
-        petPhoto: json["petPhoto"]
-    );
+  factory RequestModel.fromJson(Map<String, dynamic> json) => RequestModel(
+      id: json["id"],
+      dateReservation: json["dateReservation"],
+      startTime: json["startTime"],
+      veterinaryName: json["veterinaryName"],
+      productTypeName: json["productTypeName"],
+      productName: json["productName"],
+      petName: json["petName"],
+      status: json["status"],
+      personName: json["personName"],
+      personPhone: json["personPhone"],
+      petPhoto: json["petPhoto"]);
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
-        "dateReservation": dateReservation.toIso8601String(),
+        "dateReservation": dateReservation,
         "startTime": startTime,
-        "endTime": endTime,
         "veterinaryName": veterinaryName,
         "productTypeName": productTypeName,
         "productName": productName,
@@ -61,5 +56,5 @@ class RequestModel {
         "personName": personName,
         "personPhone": personPhone,
         "petPhoto": petPhoto
-    };
+      };
 }
