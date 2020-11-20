@@ -48,65 +48,109 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
               children: [
                 Expanded(
                   child: Container(
-                      /*  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg'),
-
-                        /* AssetImage(
-                            'assets/jar-loading.gif') /* NetworkImage('assets/no-image.png') */,
-                         */ /* 'https://res.cloudinary.com/dggqauzyy/image/upload/v1599844363/ojzjf4enmhngw2rcll5p.jpg' */
-                        fit: BoxFit.cover),
-                  ), */
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/img2.png'),
+                        fit: BoxFit.cover,
                       ),
+                    ),
+                  ),
                 ),
-                Expanded(child: Container(color: colorPetCare))
+                Expanded(
+                  child: Container(color: colorPetCare),
+                ),
               ],
             ),
           ),
-          SafeArea(
-            child: Align(
-              alignment: Alignment.center,
+          // formulario
+          Positioned(
+            bottom: 70,
+            left: 0,
+            right: 0,
+            child: Opacity(
+              opacity: 0.9,
               child: Container(
-                height: MediaQuery.of(context).size.height *
-                    0.9 /* MediaQuery.of(context).size */,
-                margin: EdgeInsets.symmetric(horizontal: 20.0),
-                padding: EdgeInsets.only(top: 50.0),
+                height: MediaQuery.of(context).size.height * 0.75,
+                margin: EdgeInsets.symmetric(horizontal: 30.0),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0)),
-                child: Form(
-                    key: formKey,
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text('RESGISTRAR CITA',
-                              style: TextStyle(fontSize: 20.0)),
-                          SizedBox(height: 60.0),
-                          _categoryName(getProvider),
-                          SizedBox(height: 30.0),
-                          _serviceName(getProduct),
-                          SizedBox(height: 30.0),
-                          _createDate(context),
-                          SizedBox(height: 30.0),
-                          _startTime(),
-                          SizedBox(height: 30.0),
-                          _dropDown(),
-                          SizedBox(height: 80.0),
-                          Row(
-                            children: <Widget>[
-                              Expanded(child: _buttonCancel()),
-                              Expanded(
-                                  child:
-                                      _buttonRequest(getProvider, getProduct)),
-                            ],
-                          )
-                        ],
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        height: 70,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(150.0),
+                            bottomRight: Radius.circular(150.0),
+                          ),
+                          color: colorPetCare,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '¡REGISTRA TU CITA!',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                    )),
+                    ),
+                    Positioned(
+                      top: 40,
+                      left: 0,
+                      right: 0,
+                      child: Form(
+                        key: formKey,
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(height: 60.0),
+                              _categoryName(getProvider),
+                              SizedBox(height: 30.0),
+                              _serviceName(getProduct),
+                              SizedBox(height: 30.0),
+                              _createDate(context),
+                              SizedBox(height: 30.0),
+                              _startTime(),
+                              SizedBox(height: 30.0),
+                              _dropDown(),
+                              SizedBox(height: 80.0),
+                              /* Row(
+                                children: <Widget>[
+                                  Expanded(child: _buttonCancel()),
+                                  Expanded(
+                                      child: _buttonRequest(
+                                          getProvider, getProduct)),
+                                ],
+                              ), */
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+          ),
+          Positioned(
+            bottom: 50,
+            left: 70,
+            right: 200,
+            child: _buttonCancel(),
+          ),
+          Positioned(
+            bottom: 50,
+            right: 70,
+            left: 200,
+            child: _buttonRequest(getProvider, getProduct),
           ),
         ],
       ),

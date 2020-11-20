@@ -48,17 +48,29 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
     final ProviderModel getProvider = ModalRoute.of(context).settings.arguments;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            _image(getProvider),
-            _titleAndSubtitleAndStar(getProvider),
-            _actions(),
-            _descriptionText(),
-            _dropDown(getProvider),
-            _createListing(getProvider, _selectedProductType)
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          _image(getProvider),
+          Container(
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 180,
+                ),
+                _titleAndSubtitleAndStar(getProvider),
+                _actions(),
+                _descriptionText(),
+                _dropDown(getProvider),
+                _createListing(getProvider, _selectedProductType)
+              ],
+            ),
+          )
+          /* _titleAndSubtitleAndStar(getProvider),
+          _actions(),
+          _descriptionText(),
+          _dropDown(getProvider),
+          _createListing(getProvider, _selectedProductType) */
+        ],
       ),
     );
   }

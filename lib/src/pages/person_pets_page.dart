@@ -9,7 +9,10 @@ class PetsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Mis Mascotas')),
+      appBar: AppBar(
+        title: Center(child: Text('Mis Mascotas')),
+        automaticallyImplyLeading: false,
+      ),
       body: Column(
         children: [_createList()],
       ),

@@ -20,8 +20,48 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text('Solicitudes'),
+        ),
+        automaticallyImplyLeading: false,
+      ),
       body: SafeArea(
-        child: _requestList(),
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  child: Positioned(
+                    right: 0,
+                    left: 0,
+                    bottom: 20,
+                    child: Opacity(
+                      opacity: 0.6,
+                      child: Container(
+                        child: Image.asset('assets/img1.png'),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Positioned(
+                    right: 0,
+                    left: 0,
+                    bottom: 20,
+                    child: Opacity(
+                      opacity: 0.6,
+                      child: Container(
+                        child: Image.asset('assets/img1.png'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            _requestList(),
+          ],
+        ),
       ),
     );
   }
@@ -63,56 +103,60 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
   }
 
   _itemCard(RequestModel request, Color color) {
-    return Card(
-      elevation: 5.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      color: color,
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  child: ListTile(
-                    leading: Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: FadeInImage(
-                          placeholder: AssetImage('assets/jar-loading.gif'),
-                          image: NetworkImage(request.petPhoto),
-                          fadeInDuration: Duration(milliseconds: 200),
-                          fit: BoxFit.cover,
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Card(
+        elevation: 5.0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        color: color,
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    child: ListTile(
+                      leading: Container(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: FadeInImage(
+                            placeholder: AssetImage('assets/jar-loading.gif'),
+                            image: NetworkImage(request.petPhoto),
+                            fadeInDuration: Duration(milliseconds: 200),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    subtitle: Column(
-                      children: [
-                        Text(''),
-                        Text(request.veterinaryName),
-                        Text(request.productName),
-                        Text(''),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  child: ListTile(
-                    subtitle: Column(
-                      children: [
-                        Text(request.dateReservation),
-                        Text(request.startTime),
-                      ],
+                      subtitle: Column(
+                        children: [
+                          Text(''),
+                          Text(request.veterinaryName),
+                          Text(request.productName),
+                          Text(''),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    child: ListTile(
+                      subtitle: Column(
+                        children: [
+                          Text(request.dateReservation),
+                          Text(request.startTime),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

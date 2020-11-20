@@ -34,6 +34,31 @@ class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
                   ),
                 ),
                 Positioned(
+                  top: 40,
+                  left: 30,
+                  right: 0,
+                  child: Container(
+                    child: Text(
+                      'PETCARE',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 30,
+                  right: 40,
+                  child: Container(
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://upload.wikimedia.org/wikipedia/commons/7/7b/Stan_Lee_by_Gage_Skidmore_3.jpg'),
+                      radius: 25.0,
+                    ),
+                  ),
+                ),
+                Positioned(
                   bottom: 30,
                   left: 0,
                   right: 0,
@@ -65,7 +90,7 @@ class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 3,
             child: _createListing(),
           ),
         ],
@@ -93,25 +118,40 @@ class _MainPersonProfilePageState extends State<HomePersonProfilePage> {
   Widget _createItem(ProviderModel product, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(14.0),
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            (product.photo == null)
-                ? Image(image: AssetImage('assets/no-image.png'))
-                : FadeInImage(
-                    placeholder: AssetImage('assets/jar-loading.gif'),
-                    image: NetworkImage(product.photo),
-                    height: 300.0,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-            ListTile(
-              title: Text(product.businessName),
-              subtitle: Text(product.address),
-              onTap: () => Navigator.pushNamed(context, 'detail_provider',
-                  arguments: product),
+      child: Material(
+        elevation: 20,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(36),
+              topRight: Radius.circular(36),
             ),
-          ],
+          ),
+          child: Column(
+            children: <Widget>[
+              (product.photo == null)
+                  ? Image(image: AssetImage('assets/no-image.png'))
+                  : ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(36),
+                        topRight: Radius.circular(36),
+                      ),
+                      child: FadeInImage(
+                        placeholder: AssetImage('assets/jar-loading.gif'),
+                        image: NetworkImage(product.photo),
+                        height: 300.0,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+              ListTile(
+                title: Text(product.businessName),
+                subtitle: Text(product.address),
+                onTap: () => Navigator.pushNamed(context, 'detail_provider',
+                    arguments: product),
+              ),
+            ],
+          ),
         ),
       ),
     );
