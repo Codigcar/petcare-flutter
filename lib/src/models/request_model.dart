@@ -17,7 +17,8 @@ class RequestModel {
       this.status,
       this.personName,
       this.personPhone,
-      this.petPhoto});
+      this.petPhoto,
+      this.personPhoto});
 
   int id;
   String dateReservation;
@@ -30,6 +31,7 @@ class RequestModel {
   String personName;
   String personPhone;
   String petPhoto;
+  String personPhoto;
 
   factory RequestModel.fromJson(Map<String, dynamic> json) => RequestModel(
       id: json["id"],
@@ -42,7 +44,8 @@ class RequestModel {
       status: json["status"],
       personName: json["personName"],
       personPhone: json["personPhone"],
-      petPhoto: json["petPhoto"]);
+      petPhoto: json["petPhoto"],
+      personPhoto: json["personPhoto"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -55,6 +58,7 @@ class RequestModel {
         "status": status,
         "personName": personName,
         "personPhone": personPhone,
-        "petPhoto": petPhoto
+        "petPhoto": petPhoto,
+        "personPhoto": personPhoto
       };
 }

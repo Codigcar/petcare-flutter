@@ -13,8 +13,25 @@ class PetsPage extends StatelessWidget {
         title: Center(child: Text('Mis Mascotas')),
         automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [_createList()],
+      body: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: Opacity(
+              opacity: 0.6,
+              child: Container(
+                child: Image.asset('assets/img4.png'),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              _createList(),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -27,14 +44,14 @@ class PetsPage extends StatelessWidget {
           final getPets = snapshot.data;
           print(getPets.length);
           return Expanded(
-              child: GridView.builder(
-            /*  padding: EdgeInsets.only(left: 20.0, top: 30.0), */
-            itemCount: getPets.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 0.90),
-            itemBuilder: (context, index) =>
-                _createItem(context, getPets[index]),
-          ));
+            child: GridView.builder(
+              itemCount: getPets.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 0.90),
+              itemBuilder: (context, index) =>
+                  _createItem(context, getPets[index]),
+            ),
+          );
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -43,31 +60,6 @@ class PetsPage extends StatelessWidget {
   }
 
   Widget _createItem(BuildContext context, PetModel pet) {
-    /* return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(  
-                padding: EdgeInsets.all(kDefaultPaddin),
-                height: 180,
-                width: 160, 
-                decoration: BoxDecoration(
-                  color: colorPetCare,
-                  borderRadius: BorderRadius.circular(25.0)
-                ),   
-                child: FadeInImage(
-                  placeholder: AssetImage('assets/jar-loading.gif'), 
-                  image: NetworkImage(pet.photo),
-                  /* fit: BoxFit.cover,  */
-                )
-        ),
-        Container(
-          child: Text(
-           pet.name, style: TextStyle(color: Colors.black)
-        ),
-        )
-      ],
-    ); */
-
     final card = Container(
       child: FadeInImage(
         placeholder: AssetImage('assets/jar-loading.gif'),

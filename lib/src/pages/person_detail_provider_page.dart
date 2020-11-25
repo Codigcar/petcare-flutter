@@ -128,13 +128,16 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
   }
 
   Widget _actions() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        _action(Icons.call, 'Llamar'),
-        _action(Icons.near_me, 'Ruta'),
-        _action(Icons.share, 'Compartir'),
-      ],
+    return Container(
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _action(Icons.call, 'Llamar'),
+          _action(Icons.near_me, 'Ruta'),
+          _action(Icons.share, 'Compartir'),
+        ],
+      ),
     );
   }
 
@@ -158,6 +161,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
 
   Widget _descriptionText() {
     return Container(
+      color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
       child: Text(
         'Sunt adipisicing pariatur in ad qui qui proident aliquip ad eiusmod exercitation minim voluptate aute. Sunt aliquip quis fugiat id dolore dolor culpa exercitation nulla ut. Nostrud velit dolor dolore ullamco nulla dolor exercitation duis ullamco sit officia mollit est. Eiusmod do do ut veniam proident ad. Incididunt exercitation sit in est duis. Excepteur duis sint mollit eu incididunt.',

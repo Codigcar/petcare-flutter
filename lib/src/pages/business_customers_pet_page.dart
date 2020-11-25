@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/models/person_profile_model.dart';
+import 'package:petcare/src/models/pet_model.dart';
 import 'package:petcare/src/models/request_model.dart';
 import 'package:petcare/src/services/business_request_service.dart';
-import 'package:petcare/src/services/person_profile_service.dart';
+import 'package:petcare/src/services/pet_service.dart';
 
 import '../../constants.dart';
 
-class BusinessCustomersPage extends StatefulWidget {
+class BusinessCustomersPetPage extends StatefulWidget {
   @override
-  _BusinessCustomersPageState createState() => _BusinessCustomersPageState();
+  _BusinessCustomersPetPageState createState() =>
+      _BusinessCustomersPetPageState();
 }
 
-class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
-  final businessRequestService = new BusinessRequestService();
-  final personProfileService = new PersonProfileService();
-  var personProfile = new PersonProfileModel();
+class _BusinessCustomersPetPageState extends State<BusinessCustomersPetPage> {
+  final petService = new PetService();
+
   @override
   Widget build(BuildContext context) {
-    personProfileService
-        .getPersonProfileById(1)
-        .then((value) => {personProfile = value});
+    final PersonProfileModel personProfileModel =
+        ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Mascotas'),
-        ),
+        title: Text('Mascotas'),
       ),
       body: SafeArea(
         child: Stack(
           children: [
             Column(
               children: [
-                _createList(),
+                _createList(personProfileModel),
               ],
             ),
           ],
@@ -41,21 +39,19 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
     );
   }
 
-  Widget _createList() {
+  Widget _createList(PersonProfileModel personProfileModel) {
     return FutureBuilder(
-      //future: petService.getAllPetsByPersonId(1),
-      future: businessRequestService.getAllRequestByProviderId(1),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<RequestModel>> snapshot) {
+      future: petService.getAllPetsByPersonId(personProfileModel.id),
+      builder: (BuildContext context, AsyncSnapshot<List<PetModel>> snapshot) {
         if (snapshot.hasData) {
-          final getRequests = snapshot.data;
+          final pets = snapshot.data;
           return Expanded(
             child: GridView.builder(
-              itemCount: getRequests.length,
+              itemCount: pets.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.90),
               itemBuilder: (context, index) =>
-                  _createItem(context, getRequests[index]),
+                  _createItem(context, pets[index]),
             ),
           );
         } else {
@@ -65,11 +61,21 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
     );
   }
 
-  Widget _createItem(BuildContext context, RequestModel request) {
+  Widget _createItem(BuildContext context, PetModel pet) {
+    final card = Container(
+      child: FadeInImage(
+        placeholder: AssetImage('assets/jar-loading.gif'),
+        image: NetworkImage(pet.photo),
+        fadeInDuration: Duration(milliseconds: 200),
+        fit: BoxFit.cover,
+      ),
+    );
+
     return Material(
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, 'business_customer_pet',
-            arguments: personProfile),
+        onTap: () => Navigator.pushNamed(
+            context, 'business_customer_pet_detail',
+            arguments: pet),
         child: Container(
           child: Column(
             children: [
@@ -80,17 +86,17 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
                     radius: 110,
                     child: CircleAvatar(
                       radius: 92,
-                      backgroundImage: NetworkImage(personProfile.photo),
+                      backgroundImage: NetworkImage(pet.photo),
                     ),
                   ),
                 ),
               ),
               Center(
                 child: Text(
-                  personProfile.document,
+                  pet.name,
                   style: TextStyle(fontSize: 18),
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/constants.dart';
+import 'package:petcare/src/models/person_profile_model.dart';
 import 'package:petcare/src/models/pet_model.dart';
 import 'package:petcare/src/models/request_model.dart';
 import 'package:petcare/src/services/person_request_service.dart';
+import 'package:petcare/src/services/pet_service.dart';
 
-class DetailPetPage extends StatefulWidget {
-  const DetailPetPage({Key key}) : super(key: key);
+class DetailPetDetailPage extends StatefulWidget {
+  const DetailPetDetailPage({Key key}) : super(key: key);
 
   @override
-  _DetailPetPageState createState() => _DetailPetPageState();
+  _DetailPetDetailPageState createState() => _DetailPetDetailPageState();
 }
 
-class _DetailPetPageState extends State<DetailPetPage> {
+class _DetailPetDetailPageState extends State<DetailPetDetailPage> {
   final colorPetCare = Color.fromRGBO(46, 177, 185, 1.0);
   final requestService = new RequestService();
+  List<PetModel> pets = new List<PetModel>();
+  final petService = new PetService();
 
   @override
   Widget build(BuildContext context) {
-    final PetModel pet = ModalRoute.of(context).settings.arguments;
-
+    final PersonProfileModel personProfileModel =
+        ModalRoute.of(context).settings.arguments;
+/* 
+    petService
+        .getAllPetsByPersonId(personProfileModel.id)
+        .then((value) => {pets = value});
+ */
     return Scaffold(
-      /* appBar: AppBar(
+        /* appBar: AppBar(
         title: Text('Perfil Medico'),
       ), */
-      body: Container(
+        /* body: Container(
         color: Colors.white,
         child: Stack(
           children: [
@@ -177,8 +186,8 @@ class _DetailPetPageState extends State<DetailPetPage> {
             ),
           ],
         ),
-      ),
-    );
+      ), */
+        );
   }
 
   Widget _requestList() {

@@ -18,7 +18,8 @@ class PerfilPage extends StatelessWidget {
  */
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mi Perfil'),
+        title: Center(child: Text('Mi Perfil')),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         child: Column(

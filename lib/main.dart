@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/bloc/provider.dart';
+import 'package:petcare/src/pages/business_customers_pet_detail.dart';
+import 'package:petcare/src/pages/business_customers_pet_page.dart';
 import 'package:petcare/src/pages/person_config_perfil_page.dart';
 import 'package:petcare/src/pages/person_detail_pet_page.dart';
 import 'package:petcare/src/pages/person_detail_provider_page.dart';
@@ -41,47 +43,52 @@ class _MyAppState extends State<MyApp> {
     /* final prefs = new UserPreferences();
     print( prefs.token ); */
     return Provider(
-        child: MaterialApp(
-      title: 'Material App',
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        // ... app-specific localization delegate[s] here
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en', ''), // English, no country code
-        const Locale('es', 'ES'), // Hebrew, no country code
-        const Locale.fromSubtags(
-            languageCode: 'zh'), // Chinese *See Advanced Locales below*
-        // ... other locales the app supports
-      ],
-      initialRoute: 'login',
-      routes: {
-        'login': (BuildContext context) => LoginPage(),
-        'home': (BuildContext context) => HomePage(),
-        'register': (BuildContext context) => RegisterPage(),
-        'register_person_profile': (BuildContext context) =>
-            RegisterPersonProfilePage(),
-        'register_pet': (BuildContext context) => RegisterPetPage(),
-        'register_business_profile': (BuildContext context) =>
-            RegisterBusinessProfile(),
-        'register_provider': (BuildContext context) => RegisterProviderPage(),
-        'home_person_profile': (BuildContext context) =>
-            HomePersonProfilePage(),
-        'detail_provider': (BuildContext context) => DetailProviderPage(),
-        'menu_navbar': (BuildContext context) => BottomNavBar(),
-        'register_cita': (BuildContext context) => RegisterCitaPage(),
-        'person_request_list': (BuildContext context) => PersonRequestPage(),
-        'detail_pet': (BuildContext context) => DetailPetPage(),
-        'home_business': (BuildContext context) => HomeBusinessPage(),
-        'home_business_nabvar': (BuildContext context) =>
-            MenuBusinessNavbarPage(),
-        'person_perfil': (BuildContext context) => PerfilPage(),
-      },
-      theme: ThemeData(primaryColor: Color.fromRGBO(46, 177, 185, 1.0)),
-    ));
+      child: MaterialApp(
+        title: 'Material App',
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          // ... app-specific localization delegate[s] here
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''), // English, no country code
+          const Locale('es', 'ES'), // Hebrew, no country code
+          const Locale.fromSubtags(
+              languageCode: 'zh'), // Chinese *See Advanced Locales below*
+          // ... other locales the app supports
+        ],
+        initialRoute: 'home_business_nabvar',
+        routes: {
+          'login': (BuildContext context) => LoginPage(),
+          'home': (BuildContext context) => HomePage(),
+          'register': (BuildContext context) => RegisterPage(),
+          'register_person_profile': (BuildContext context) =>
+              RegisterPersonProfilePage(),
+          'register_pet': (BuildContext context) => RegisterPetPage(),
+          'register_business_profile': (BuildContext context) =>
+              RegisterBusinessProfile(),
+          'register_provider': (BuildContext context) => RegisterProviderPage(),
+          'home_person_profile': (BuildContext context) =>
+              HomePersonProfilePage(),
+          'detail_provider': (BuildContext context) => DetailProviderPage(),
+          'menu_navbar': (BuildContext context) => BottomNavBar(),
+          'register_cita': (BuildContext context) => RegisterCitaPage(),
+          'person_request_list': (BuildContext context) => PersonRequestPage(),
+          'detail_pet': (BuildContext context) => DetailPetPage(),
+          'home_business': (BuildContext context) => HomeBusinessPage(),
+          'home_business_nabvar': (BuildContext context) =>
+              MenuBusinessNavbarPage(),
+          'person_perfil': (BuildContext context) => PerfilPage(),
+          'business_customer_pet': (BuildContext context) =>
+              BusinessCustomersPetPage(),
+          'business_customer_pet_detail': (BuildContext context) =>
+              DetailPetDetailPage()
+        },
+        theme: ThemeData(primaryColor: Color.fromRGBO(46, 177, 185, 1.0)),
+      ),
+    );
   }
 }
 
