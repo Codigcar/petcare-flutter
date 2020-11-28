@@ -42,8 +42,6 @@ class RequestService {
     List<RequestModel> requests = (json.decode(resp.body) as List)
         .map((data) => RequestModel.fromJson(data))
         .toList();
-    print('-------REQUEST');
-    print(requests);
     return requests;
   }
 }

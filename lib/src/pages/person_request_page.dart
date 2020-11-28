@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petcare/constants.dart';
 import 'package:petcare/src/models/request_model.dart';
 import 'package:petcare/src/services/person_request_service.dart';
 
@@ -88,12 +89,12 @@ class _PersonRequestPageState extends State<PersonRequestPage> {
     if (request.status == 0) {
       return Container(
           padding: EdgeInsets.all(5.0),
-          child: _itemCard(request, Colors.yellowAccent));
+          child: _itemCard(request, Color.fromRGBO(210, 217, 136, 1.0)));
     }
     if (request.status == 1) {
       return Container(
           padding: EdgeInsets.all(5.0),
-          child: _itemCard(request, Colors.greenAccent));
+          child: _itemCard(request, colorPetCare));
     }
     if (request.status == 2) {
       return Container(

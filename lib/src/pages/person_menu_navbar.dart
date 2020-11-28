@@ -37,10 +37,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 2:
         return _petsPage;
         break;
-      case 3:
+      /* case 3:
         return _registerPetPage;
-        break;
-      case 4:
+        break; */
+      case 3:
         return _personPerfilPage;
         break;
     }
@@ -67,7 +67,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               color: Colors.white,
             ),
             Icon(Icons.pets, size: 30, color: Colors.white),
-            Icon(Icons.add_comment, size: 30, color: Colors.white),
+            /* Icon(Icons.add_comment, size: 30, color: Colors.white), */
             Icon(Icons.account_circle, size: 30, color: Colors.white),
           ],
           color: colorPetCare,

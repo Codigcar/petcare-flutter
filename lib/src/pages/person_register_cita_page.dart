@@ -9,6 +9,8 @@ import 'package:petcare/src/services/pet_service.dart';
 import 'package:petcare/src/storage/storage.dart';
 import 'package:petcare/src/utils/utils.dart' as utils;
 
+import '../../constants.dart';
+
 class RegisterCitaPage extends StatefulWidget {
   @override
   _RegisterCitaPageState createState() => _RegisterCitaPageState();
@@ -122,14 +124,6 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
                               SizedBox(height: 30.0),
                               _dropDown(),
                               SizedBox(height: 80.0),
-                              /* Row(
-                                children: <Widget>[
-                                  Expanded(child: _buttonCancel()),
-                                  Expanded(
-                                      child: _buttonRequest(
-                                          getProvider, getProduct)),
-                                ],
-                              ), */
                             ],
                           ),
                         ),
@@ -142,14 +136,14 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
           ),
           Positioned(
             bottom: 50,
-            left: 70,
-            right: 200,
+            left: 40,
+            right: 220,
             child: _buttonCancel(),
           ),
           Positioned(
             bottom: 50,
-            right: 70,
-            left: 200,
+            right: 40,
+            left: 220,
             child: _buttonRequest(getProvider, getProduct),
           ),
         ],
@@ -187,8 +181,16 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
             padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 0.0),
             child: Row(
               children: <Widget>[
-                Icon(Icons.select_all),
+                Icon(Icons.pets),
+                Text('  '),
                 DropdownButton(
+                  style: TextStyle(color: colorPetCare, fontSize: 18.0),
+                  elevation: 20,
+                  icon: Icon(Icons.arrow_downward),
+                  underline: Container(
+                    height: 2,
+                    color: colorPetCare2,
+                  ),
                   value: _selectedOption,
                   items: getOptionsDropdown(petList),
                   onChanged: (value) {
@@ -212,6 +214,7 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
 
   Widget _buttonCancel() {
     return Container(
+      width: 50,
       margin: EdgeInsets.symmetric(horizontal: 10.0),
       child: RaisedButton(
         elevation: 10.0,
@@ -220,7 +223,9 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
         color: Colors.white,
         textColor: colorPetCare,
         child: Text('Cancelar'),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
       ),
     );
   }
@@ -341,13 +346,49 @@ class _RegisterCitaPageState extends State<RegisterCitaPage> {
         textColor: Colors.white,
         child: Text('Aceptar'),
         onPressed: () {
-          personRequestModel.status = 0;
-          personRequestModel.startTime = "2:00";
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              return AlertDialog(
+                /* title: Text('Registrar cita'),
+                content: Text('Quieres continuar con el registro de la cita?'), */
+                /* actions: [
+              FlatButton(
+                onPressed: () {},
+                child: Text('Cancelar'),
+              ),
+              FlatButton(
+                onPressed: () {},
+                child: Text('Aceptar'),
+              ),
+            ], */
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                title: Text('Registrar cita'),
+                content: Text('¿Quieres continuar con el registro de la cita?'),
+                actions: <Widget>[
+                  FlatButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Cancelar')),
+                  FlatButton(
+                    onPressed: () {
+                      personRequestModel.status = 0;
+                      personRequestModel.startTime = "2:00";
 
-          if (!formKey.currentState.validate()) return;
-          formKey.currentState.save();
-          requestService.registerRequest(personRequestModel, 1, _selectedPet,
-              getProvider.id, 1, getProduct.id);
+                      if (!formKey.currentState.validate()) return;
+                      formKey.currentState.save();
+                      requestService.registerRequest(personRequestModel, 1,
+                          _selectedPet, getProvider.id, 1, getProduct.id);
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Ok'),
+                  ),
+                ],
+              );
+            },
+          );
         },
       ),
     );

@@ -8,6 +8,7 @@ import 'package:petcare/src/services/product_service.dart';
 import 'package:petcare/src/services/product_type_service.dart';
 import 'package:petcare/src/services/provider_join_product_type_service.dart';
 import 'package:petcare/src/services/provider_service.dart';
+import 'package:diacritic/diacritic.dart';
 
 class DetailProviderPage extends StatefulWidget {
   @override
@@ -52,24 +53,29 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
         children: <Widget>[
           _image(getProvider),
           Container(
+            margin: EdgeInsets.only(top: 290),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50),
+                topRight: Radius.circular(50),
+              ),
+              color: Colors.white,
+            ),
             child: ListView(
               children: [
-                SizedBox(
-                  height: 180,
-                ),
                 _titleAndSubtitleAndStar(getProvider),
+                SizedBox(height: 20),
                 _actions(),
+                SizedBox(height: 18),
                 _descriptionText(),
+                SizedBox(height: 25),
                 _dropDown(getProvider),
-                _createListing(getProvider, _selectedProductType)
+                SizedBox(height: 25),
+                _createListing(getProvider, _selectedProductType),
+                SizedBox(height: 60),
               ],
             ),
           )
-          /* _titleAndSubtitleAndStar(getProvider),
-          _actions(),
-          _descriptionText(),
-          _dropDown(getProvider),
-          _createListing(getProvider, _selectedProductType) */
         ],
       ),
     );
@@ -82,21 +88,14 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
         image: NetworkImage(provider.photo),
         width: double.infinity,
         fit: BoxFit.cover,
-        height: 250.0,
+        height: 450.0,
       ),
     );
   }
 
   Widget _titleAndSubtitleAndStar(ProviderModel provider) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(40.0),
-          topRight: const Radius.circular(40.0),
-        ),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
       child: Row(
         children: <Widget>[
           _titleAndSubtitle(provider),
@@ -119,8 +118,11 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(provider.businessName, style: titleStyle),
-          SizedBox(height: 7.0),
+          Text(
+            provider.businessName,
+            style: titleStyle,
+          ),
+          SizedBox(height: 20.0),
           Text(provider.address, style: subtitleStyle),
         ],
       ),
@@ -129,7 +131,6 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
 
   Widget _actions() {
     return Container(
-      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -161,7 +162,6 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
 
   Widget _descriptionText() {
     return Container(
-      color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
       child: Text(
         'Sunt adipisicing pariatur in ad qui qui proident aliquip ad eiusmod exercitation minim voluptate aute. Sunt aliquip quis fugiat id dolore dolor culpa exercitation nulla ut. Nostrud velit dolor dolore ullamco nulla dolor exercitation duis ullamco sit officia mollit est. Eiusmod do do ut veniam proident ad. Incididunt exercitation sit in est duis. Excepteur duis sint mollit eu incididunt.',
@@ -196,7 +196,8 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
             padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 0.0),
             child: Row(
               children: <Widget>[
-                Icon(Icons.select_all),
+                Icon(Icons.pets),
+                Text('  '),
                 DropdownButton(
                   style: TextStyle(color: colorPetCare, fontSize: 18.0),
                   elevation: 20,
@@ -285,7 +286,7 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                             fontSize: 20.0),
                       ),
                       subtitle: Text(
-                        product.description,
+                        removeDiacritics(product.description),
                         style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     ),
@@ -297,11 +298,6 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                       child: RaisedButton(
                         color: Colors.white,
                         onPressed: () {
-                          /* Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterCitaPage()),
-                          ); */
                           Navigator.pushNamed(context, 'register_cita',
                               arguments: [provider, product]);
                         },
@@ -312,23 +308,6 @@ class _DetailProviderPageState extends State<DetailProviderPage> {
                       ),
                     ),
                   )
-                  /* Align(
-                    alignment: Alignment.bottomCenter,
-                    child: RaisedButton(
-                      child: Container(
-                        child: Text('Solicitar Cita'),
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0)),
-                      textColor: Colors.white,
-                      color: Colors.red,
-                      onPressed: () {
-                        /* Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterCitaPage())); */
-                        Navigator.pushNamed(context, 'register_cita',
-                            arguments: [provider, product]);
-                      },
-                    ),
-                  ) */
                 ],
               ),
             ),

@@ -34,7 +34,7 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Datos Personales'),
+        title: Text('Información Personal'),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.photo_size_select_actual),
@@ -42,32 +42,36 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
           IconButton(icon: Icon(Icons.camera_alt), onPressed: _takePhoto),
         ],
       ),
-      body: Form(
-        key: formKey,
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          children: <Widget>[
-            _showPhoto(),
-            Divider(),
-            Divider(),
-            _inputName(),
-            Divider(),
-            _inputLastName(),
-            Divider(),
-            _inputPassword(),
-            Divider(),
-            _inputDocument(),
-            Divider(),
-            _inputEmail(),
-            Divider(),
-            _inputPhone(),
-            Divider(),
-            _inputAge(),
-            Divider(),
-            _createButton(),
-            Divider(),
-            /*  _buttonNextPet(context) */
-          ],
+      body: Container(
+        color: Colors.white,
+        child: Form(
+          key: formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            children: <Widget>[
+              _showPhoto(),
+              _space(),
+              _inputName(),
+              _space(),
+              _inputLastName(),
+              _space(),
+              _inputPassword(),
+              _space(),
+              _inputDocument(),
+              _space(),
+              _inputEmail(),
+              _space(),
+              _inputPhone(),
+              _space(),
+              _inputAge(),
+              _space(),
+              _createButton(),
+              SizedBox(
+                height: 100,
+              )
+              /*  _buttonNextPet(context) */
+            ],
+          ),
         ),
       ),
     );
@@ -181,19 +185,23 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
           labelText: 'Edad',
           hintText: 'Edad',
           icon: Icon(Icons.perm_contact_calendar),
-          suffixIcon: Icon(Icons.calendar_today)),
+          suffixIcon: Icon(Icons.assignment_ind)),
       onSaved: (newValue) => personProfileModel.age = newValue,
     );
   }
 
   Widget _createButton() {
-    return RaisedButton.icon(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      color: Color.fromRGBO(46, 177, 185, 1.0),
-      textColor: Colors.white,
-      label: Text('Guardar Datos'),
-      icon: Icon(Icons.save),
-      onPressed: () => _submit(),
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, right: 50),
+      child: RaisedButton.icon(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        color: Color.fromRGBO(46, 177, 185, 1.0),
+        textColor: Colors.white,
+        label: Text('Guardar Datos'),
+        icon: Icon(Icons.save),
+        onPressed: () => _submit(),
+      ),
     );
   }
 
@@ -228,12 +236,6 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
 
   Widget _showPhoto() {
     if (personProfileModel.photo != null) {
-      /*  return FadeInImage(
-        placeholder: AssetImage('assets/jar-loading.gif'),
-        image: NetworkImage(personProfileModel.photo),
-        height: 300.0,
-        fit: BoxFit.contain,
-      ); */
       return Container();
     } else {
       return Container(
@@ -246,26 +248,15 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
                     radius: 50,
-                    /* child: ClipOval(
-                      child: Image.asset('assets/no-image.png'),
-                    ), */
+                    child: Icon(
+                      Icons.child_care,
+                      size: 90,
+                    ),
                   ),
                 ),
               )
-
-            /*CircleAvatar(
-                radius: 50,
-
-                 child: ClipOval(
-                  child: Container(
-                    child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: Image.asset('assets/no-image.png'),
-                    ),
-                  ),
-                ), 
-              )*/
             : Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -317,5 +308,9 @@ class _RegisterUserPageState extends State<RegisterPersonProfilePage> {
 
   _takePhoto() async {
     _processImage(ImageSource.camera);
+  }
+
+  _space() {
+    return SizedBox(height: 16);
   }
 }

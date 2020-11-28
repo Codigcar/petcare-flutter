@@ -15,6 +15,7 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
   final businessRequestService = new BusinessRequestService();
   final personProfileService = new PersonProfileService();
   var personProfile = new PersonProfileModel();
+  List<RequestModel> listRequest = new List<RequestModel>();
   @override
   Widget build(BuildContext context) {
     personProfileService
@@ -24,8 +25,9 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('Mascotas'),
+          child: Text('Mis Clientes'),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Stack(
@@ -43,7 +45,6 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
 
   Widget _createList() {
     return FutureBuilder(
-      //future: petService.getAllPetsByPersonId(1),
       future: businessRequestService.getAllRequestByProviderId(1),
       builder:
           (BuildContext context, AsyncSnapshot<List<RequestModel>> snapshot) {
@@ -54,8 +55,19 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
               itemCount: getRequests.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.90),
-              itemBuilder: (context, index) =>
-                  _createItem(context, getRequests[index]),
+              itemBuilder: (context, index) {
+                if (index > 0) {
+                  if (getRequests[index].status == 1) {
+                    if (getRequests[index].personPhone !=
+                        getRequests[index].personPhone)
+                      return _createItem(context, getRequests[index]);
+                  }
+                } else {
+                  if (getRequests[index].status == 1) {
+                    return _createItem(context, getRequests[0]);
+                  }
+                }
+              },
             ),
           );
         } else {
@@ -70,30 +82,32 @@ class _BusinessCustomersPageState extends State<BusinessCustomersPage> {
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, 'business_customer_pet',
             arguments: personProfile),
-        child: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  child: CircleAvatar(
-                    backgroundColor: colorPetCare,
-                    radius: 110,
-                    child: CircleAvatar(
-                      radius: 92,
-                      backgroundImage: NetworkImage(personProfile.photo),
+        child: Padding(
+            padding: const EdgeInsets.all(26.0),
+            child: Container(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: CircleAvatar(
+                        backgroundColor: colorPetCare,
+                        radius: 110,
+                        child: CircleAvatar(
+                          radius: 73,
+                          backgroundImage: NetworkImage(personProfile.photo),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Center(
+                    child: Text(
+                      personProfile.document,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  )
+                ],
               ),
-              Center(
-                child: Text(
-                  personProfile.document,
-                  style: TextStyle(fontSize: 18),
-                ),
-              )
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }

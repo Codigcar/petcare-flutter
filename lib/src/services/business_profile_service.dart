@@ -8,30 +8,22 @@ class BusinessProfileService {
   final String _url = 'http://10.0.2.2:8081/api';
   final _storage = new Storage();
 
-
-  Future<bool> registerBusinessProfile(BusinessProfileModel businessProfile) async {
+  Future<bool> registerBusinessProfile(
+      BusinessProfileModel businessProfile) async {
     final url = '$_url/business';
-    Map<String, String> headers = {'Content-Type': 'application/json; charset=UTF-8'};
-    final resp = await http.post( url, headers: headers, body: businessProfileModelToJson(businessProfile));
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
+    final resp = await http.post(url,
+        headers: headers, body: businessProfileModelToJson(businessProfile));
     final decodedData = json.decode(resp.body);
-    print("id: "+decodedData['id'].toString());
+    print("id: " + decodedData['id'].toString());
     print(decodedData);
     _storage.businessProfileId = decodedData['id'];
-    if( resp.statusCode == 200 ){
+    if (resp.statusCode == 200) {
       return true;
     } else {
       return false;
     }
   }
-
-  
-
-  /*static Future<List<ServiceCategory>> getServiceCategories( ) async {
-    final resp= await   http.get('https://rapisolverprueba.herokuapp.com/api/servicecategories');
-      List<ServiceCategory> servicecategories = (json.decode(resp.body) as List)
-      .map((data) => ServiceCategory.fromJson(data))
-      .toList();
-     return servicecategories;
-
-  } */
 }

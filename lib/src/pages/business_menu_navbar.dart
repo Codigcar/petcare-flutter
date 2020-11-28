@@ -62,18 +62,10 @@ class _MenuBusinessNavbarPageState extends State<MenuBusinessNavbarPage> {
           index: _pageIndex,
           height: 50.0,
           items: <Widget>[
-            Icon(
-              Icons.home,
-              size: 30,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.person,
-              size: 30,
-              color: Colors.white,
-            ),
+            Icon(Icons.home, size: 30, color: Colors.white),
+            Icon(Icons.person, size: 30, color: Colors.white),
             Icon(Icons.perm_contact_calendar, size: 30, color: Colors.white),
-            Icon(Icons.comment, size: 30, color: Colors.white),
+            /* Icon(Icons.comment, size: 30, color: Colors.white), */
             Icon(Icons.build, size: 30, color: Colors.white),
           ],
           color: colorPetCare,

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petcare/src/bloc/provider.dart';
-import 'package:petcare/src/pages/business_customers_pet_detail.dart';
+import 'package:petcare/src/pages/business_customers_pet_detail_page.dart';
 import 'package:petcare/src/pages/business_customers_pet_page.dart';
 import 'package:petcare/src/pages/person_config_perfil_page.dart';
-import 'package:petcare/src/pages/person_detail_pet_page.dart';
 import 'package:petcare/src/pages/person_detail_provider_page.dart';
 import 'package:petcare/src/pages/business_home_page.dart';
 
@@ -12,6 +11,7 @@ import 'package:petcare/src/pages/login_page.dart';
 import 'package:petcare/src/pages/person_home_page.dart';
 import 'package:petcare/src/pages/business_menu_navbar.dart';
 import 'package:petcare/src/pages/person_menu_navbar.dart';
+import 'package:petcare/src/pages/person_pet_detail_page.dart';
 import 'package:petcare/src/pages/person_request_page.dart';
 import 'package:petcare/src/pages/business_register_profile_page.dart';
 import 'package:petcare/src/pages/person_register_cita_page.dart';
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
               languageCode: 'zh'), // Chinese *See Advanced Locales below*
           // ... other locales the app supports
         ],
-        initialRoute: 'home_business_nabvar',
+        initialRoute: 'login',
         routes: {
           'login': (BuildContext context) => LoginPage(),
           'home': (BuildContext context) => HomePage(),

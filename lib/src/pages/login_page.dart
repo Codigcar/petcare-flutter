@@ -145,20 +145,62 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/google.png'),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/facebook.png'),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/twitter.png'),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Text('¿No tienes cuenta? Registrate!!'),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              FlatButton(
-                child:
-                    Text('Veterinario', style: TextStyle(color: colorPetCare)),
-                onPressed: () =>
-                    Navigator.pushReplacementNamed(context, 'register'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.local_hospital,
+                    color: colorPetCare,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Veterinario',
+                      style: TextStyle(color: colorPetCare, fontSize: 17),
+                    ),
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, 'register'),
+                  ),
+                ],
               ),
-              FlatButton(
-                child: Text('PetLover'),
-                onPressed: () => Navigator.pushReplacementNamed(
-                    context, 'register_person_profile'),
+              Row(
+                children: [
+                  Icon(Icons.person_pin),
+                  FlatButton(
+                    child: Text(
+                      'PetLover',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    onPressed: () => Navigator.pushReplacementNamed(
+                        context, 'register_person_profile'),
+                  ),
+                ],
               ),
             ],
           ),
@@ -241,7 +283,15 @@ class LoginPage extends StatelessWidget {
         if (value[i].user == bloc.get_email &&
             value[i].password == bloc.get_password) {
           _savePersonProfileId(value[i].user);
-          Navigator.pushNamed(context, 'menu_navbar');
+
+          accountService.getRolByAccountId(value[i].id).then((rolDB) {
+            if (rolDB.id == 1) {
+              Navigator.pushNamed(context, 'menu_navbar');
+            } else {
+              Navigator.pushNamed(context, 'home_business_nabvar');
+            }
+          });
+
           dataEncontrada = true;
           break;
         }
@@ -250,14 +300,6 @@ class LoginPage extends StatelessWidget {
         showAlert(context, 'Datos Incorrectos!');
       }
     });
-
-    /*   if ( info['ok'] ) {
-      Navigator.pushReplacementNamed(context, 'home');
-    } else {
-      showAlert(context, info['mensaje']);
-    } */
-
-    /* Navigator.pushNamed(context, 'home'); */
   }
 
   _savePersonProfileId(String email) async {

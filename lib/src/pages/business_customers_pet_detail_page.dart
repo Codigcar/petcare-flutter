@@ -21,18 +21,13 @@ class _DetailPetDetailPageState extends State<DetailPetDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final PersonProfileModel personProfileModel =
-        ModalRoute.of(context).settings.arguments;
-/* 
-    petService
-        .getAllPetsByPersonId(personProfileModel.id)
-        .then((value) => {pets = value});
- */
+    final PetModel pet = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
-        /* appBar: AppBar(
+      /* appBar: AppBar(
         title: Text('Perfil Medico'),
       ), */
-        /* body: Container(
+      body: Container(
         color: Colors.white,
         child: Stack(
           children: [
@@ -92,7 +87,7 @@ class _DetailPetDetailPageState extends State<DetailPetDetailPage> {
                             Align(
                               alignment: Alignment.bottomLeft,
                               child: Text(
-                                pet.age.toString() + ' años',
+                                pet.age.toString() + ' meses',
                                 style: TextStyle(
                                     color: colorPetCare,
                                     fontSize: 20.0,
@@ -102,13 +97,21 @@ class _DetailPetDetailPageState extends State<DetailPetDetailPage> {
                             SizedBox(height: 20),
                             Align(
                               alignment: Alignment.bottomLeft,
-                              child: Text(
-                                pet.gender,
-                                style: TextStyle(
-                                    color: colorPetCare,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              child: pet.gender == "M"
+                                  ? Text(
+                                      "Macho",
+                                      style: TextStyle(
+                                          color: colorPetCare,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  : Text(
+                                      "Hembra",
+                                      style: TextStyle(
+                                          color: colorPetCare,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                             ),
                           ],
                         ),
@@ -175,22 +178,30 @@ class _DetailPetDetailPageState extends State<DetailPetDetailPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        Text(
+                          'Acción',
+                          style: TextStyle(
+                            color: colorPetCare,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Expanded(
-                  child: _requestList(),
+                  child: _requestList(pet),
                 )
               ],
             ),
           ],
         ),
-      ), */
-        );
+      ),
+    );
   }
 
-  Widget _requestList() {
+  Widget _requestList(PetModel pet) {
     return FutureBuilder(
       future: requestService.getAllRequestByPersonId(1),
       builder:
@@ -200,7 +211,7 @@ class _DetailPetDetailPageState extends State<DetailPetDetailPage> {
           return ListView.builder(
             itemCount: requests.length,
             itemBuilder: (context, index) =>
-                _requestItem(context, requests[index]),
+                _requestItem(context, requests[index], pet),
           );
         } else {
           return Center(child: CircularProgressIndicator());
@@ -209,22 +220,37 @@ class _DetailPetDetailPageState extends State<DetailPetDetailPage> {
     );
   }
 
-  _requestItem(BuildContext context, RequestModel request) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Container(
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(request.dateReservation),
-              Text(request.veterinaryName),
-              Text(request.productName),
-            ],
-          ),
-        ),
-      ),
-    );
+  _requestItem(BuildContext context, RequestModel request, PetModel pet) {
+    return (request.status == 1 &&
+            (request.petName.toString() == pet.name.toString()))
+        ? Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Container(
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(request.dateReservation),
+                    Text(request.veterinaryName),
+                    Text(request.productName),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.edit,
+                          color: Colors.amber,
+                        ),
+                        Icon(
+                          Icons.delete_forever,
+                          color: Colors.redAccent,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        : Container();
   }
 }

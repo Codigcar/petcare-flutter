@@ -62,42 +62,36 @@ class _BusinessCustomersPetPageState extends State<BusinessCustomersPetPage> {
   }
 
   Widget _createItem(BuildContext context, PetModel pet) {
-    final card = Container(
-      child: FadeInImage(
-        placeholder: AssetImage('assets/jar-loading.gif'),
-        image: NetworkImage(pet.photo),
-        fadeInDuration: Duration(milliseconds: 200),
-        fit: BoxFit.cover,
-      ),
-    );
-
     return Material(
       child: InkWell(
         onTap: () => Navigator.pushNamed(
             context, 'business_customer_pet_detail',
             arguments: pet),
-        child: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  child: CircleAvatar(
-                    backgroundColor: colorPetCare,
-                    radius: 110,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Container(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
                     child: CircleAvatar(
-                      radius: 92,
-                      backgroundImage: NetworkImage(pet.photo),
+                      backgroundColor: colorPetCare,
+                      radius: 110,
+                      child: CircleAvatar(
+                        radius: 80,
+                        backgroundImage: NetworkImage(pet.photo),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Center(
-                child: Text(
-                  pet.name,
-                  style: TextStyle(fontSize: 18),
+                Center(
+                  child: Text(
+                    pet.name,
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

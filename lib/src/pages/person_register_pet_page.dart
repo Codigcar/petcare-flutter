@@ -47,25 +47,32 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
           IconButton(icon: Icon(Icons.camera_alt), onPressed: _takePhoto),
         ],
       ),
-      body: Form(
-        key: formKey,
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          children: <Widget>[
-            _showPhoto(),
-            Divider(),
-            _inputName(),
-            Divider(),
-            _inputAge(),
-            Divider(),
-            _inputBreed(),
-            Divider(),
-            /* _inputPhoto(), */
-            Divider(),
-            _inputSex(),
-            Divider(),
-            _createButton()
-          ],
+      body: Container(
+        color: Colors.white,
+        child: Form(
+          key: formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            children: <Widget>[
+              _showPhoto(),
+              _space(),
+              _space(),
+              _inputName(),
+              _space(),
+              _inputAge(),
+              _space(),
+              _inputBreed(),
+              _space(),
+              /* _inputPhoto(), */
+              _space(),
+              _inputSex(),
+              _space(),
+              _space(),
+              _space(),
+              _space(),
+              _createButton()
+            ],
+          ),
         ),
       ),
     );
@@ -118,8 +125,8 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
           labelText: 'Raza',
           hintText: 'Raza',
-          icon: Icon(Icons.account_circle),
-          suffixIcon: Icon(Icons.accessibility)),
+          icon: Icon(Icons.select_all),
+          suffixIcon: Icon(Icons.list)),
       onSaved: (newValue) => petModel.breed = newValue,
     );
   }
@@ -131,20 +138,24 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
           labelText: 'Sexo',
           hintText: 'Sexo',
-          icon: Icon(Icons.account_circle),
-          suffixIcon: Icon(Icons.accessibility)),
+          icon: Icon(Icons.fiber_manual_record),
+          suffixIcon: Icon(Icons.fiber_manual_record)),
       onSaved: (newValue) => petModel.gender = newValue,
     );
   }
 
   Widget _createButton() {
-    return RaisedButton.icon(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      color: Color.fromRGBO(46, 177, 185, 1.0),
-      textColor: Colors.white,
-      label: Text('Guardar Datos'),
-      icon: Icon(Icons.save),
-      onPressed: () => _submit(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 70),
+      child: RaisedButton.icon(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        color: Color.fromRGBO(46, 177, 185, 1.0),
+        textColor: Colors.white,
+        label: Text('Guardar Datos'),
+        icon: Icon(Icons.save),
+        onPressed: () => _submit(),
+      ),
     );
   }
 
@@ -210,6 +221,10 @@ class _RegisterPetPageState extends State<RegisterPetPage> {
 
   _takePhoto() async {
     _processImage(ImageSource.camera);
+  }
+
+  _space() {
+    return SizedBox(height: 16);
   }
 
   void _submit() async {
